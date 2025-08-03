@@ -26,9 +26,11 @@
   },
   "include": [
     "src/**/*.ts",
+    "src/**/*test.js",
     "eslint.config.ts",
     "eslint.constants.ts",
-    ".prettierrc"
+    ".prettierrc",
+    "vitest.config.ts"
   ],
   "exclude": ["node_modules", "dist"]
 }

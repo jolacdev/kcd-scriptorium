@@ -10,3 +10,6 @@ dist
 # Storybook Build
 storybook-static
 *storybook.log
+
+# Test Coverage
+coverage
