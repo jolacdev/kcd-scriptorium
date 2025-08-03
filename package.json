@@ -1,0 +1,42 @@
+{
+  "name": "@jolacdev/kcd-localization-toolkit",
+  "version": "1.0.0",
+  "description": "Kingdom Come: Deliverance - Localization Toolkit (CLI)",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsc -p tsconfig.build.json",
+    "dev": "nodemon --exec node --loader ts-node/esm src/index.ts",
+    "start": "echo \"Error: no production run script specified\" && exit 1",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cli",
+    "modding",
+    "localization",
+    "toolkit",
+    "kcd",
+    "kingdom-come-deliverance"
+  ],
+  "author": "Jose L",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "9.32.0",
+    "@types/node": "24.1.0",
+    "@typescript-eslint/parser": "8.38.0",
+    "eslint": "9.32.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-perfectionist": "4.15.0",
+    "eslint-plugin-prettier": "5.5.3",
+    "globals": "16.3.0",
+    "jiti": "2.5.1",
+    "nodemon": "3.1.10",
+    "prettier": "3.6.2",
+    "rimraf": "6.0.1",
+    "ts-node": "10.9.2",
+    "typescript": "5.8.3",
+    "typescript-eslint": "8.38.0"
+  }
+}

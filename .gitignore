@@ -1,0 +1,12 @@
+# IDEs
+.vscode
+
+# Dependencies
+node_modules
+
+# App Build
+dist
+
+# Storybook Build
+storybook-static
+*storybook.log
