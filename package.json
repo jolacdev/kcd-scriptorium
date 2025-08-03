@@ -1,5 +1,5 @@
 {
-  "name": "@jolacdev/kcd-localization-toolkit",
+  "name": "@jolacdev/kcd-localization-toolkit-cli",
   "version": "1.0.0",
   "description": "Kingdom Come: Deliverance - Localization Toolkit (CLI)",
   "type": "module",
