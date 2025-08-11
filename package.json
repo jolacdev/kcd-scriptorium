@@ -10,6 +10,8 @@
     "build": "npm run clean && tsc -p tsconfig.build.json",
     "dev": "nodemon --exec node --loader ts-node/esm src/index.ts",
     "start": "echo \"Error: no production run script specified\" && exit 1",
+    "lint": "eslint --fix",
+    "lint:no-fix": "eslint",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:gui": "vitest --ui"
