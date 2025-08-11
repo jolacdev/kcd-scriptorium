@@ -143,21 +143,35 @@ export default [
           order: 'asc',
           ignoreCase: true,
           groups: [
-            // Built-in or external installed modules. Example: import path from 'path' || import axios from 'axios'
+            // Built-in or external installed modules and types.
+            // Example: import path from 'path' || import axios from 'axios'
+            // Example: import type { TFunction } from 'i18next';
             ['builtin', 'external'],
-            // Internal types that are not in the same or parent directory. Example: import type { User } from '~/users'
-            'internal-type',
-            // Internal modules that are not in the same or parent directory. Example: import Button from '~/components/Button'
+            { newlinesBetween: 0 }, // NOTE: No newlines are allowed.
+            ['builtin-type', 'external-type'],
+            { newlinesBetween: 1 },
+
+            // Internal modules and types that are not in the same or parent directory.
+            // Example: import Button from '~/components/Button' || import type { ButtonProps } from '~/components/Button'
             'internal',
-            // Parent or current directory types. Example: import type { FooProps } from '../Foo' || './Foo' || './index.d.ts'
-            ['parent-type', 'sibling-type', 'index-type'],
-            // Parent or current directory modules. Example: import foo from '../utils/foo' || './foo' || '.'
+            { newlinesBetween: 0 },
+            'internal-type',
+            { newlinesBetween: 1 },
+
+            // Parent or current directory modules and types.
+            // Example: import foo from '../utils/foo' || './foo' || '.'
+            // Example: import type { FooProps } from '../utils/foo' || './foo' || '.'
             ['parent', 'sibling', 'index'],
+            { newlinesBetween: 0 },
+            ['parent-type', 'sibling-type', 'index-type'],
+            { newlinesBetween: 1 },
+
             // Side effect script files. Example: import './set-production-env.js'
             'side-effect',
+
             // Style files. Example: import './styles.scss' || import styles from './index.module.css'
             'side-effect-style',
-            { newlinesBetween: 'never' },
+            { newlinesBetween: 0 }, // NOTE: No newlines are allowed.
             'style',
           ],
         },
