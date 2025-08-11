@@ -8,7 +8,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "build": "npm run clean && tsc -p tsconfig.build.json",
-    "dev": "node --loader ts-node src/index.ts",
+    "dev": "node --experimental-transform-types --loader ts-node src/index.ts",
     "start": "echo \"Error: no production run script specified\" && exit 1",
     "lint": "eslint --fix",
     "lint:no-fix": "eslint",
