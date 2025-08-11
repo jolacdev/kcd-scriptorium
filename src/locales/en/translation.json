@@ -1,3 +1,10 @@
 {
-  "appTitle": "KCD - Localization Toolkit (CLI)"
+  "appTitle": "KCD - Localization Toolkit (CLI)",
+  "mainMenu": {
+    "options": {
+      "selectInstallFolder": "Select the folder where Kingdom Come: Deliverance is installed",
+      "changeLanguage": "Change language",
+      "exit": "Exit"
+    }
+  }
 }

@@ -1,7 +1,9 @@
-import { changeLanguage, initI18n } from './config/i18n.js';
+import { appState } from './appState.ts';
+import { mainMenu } from './cli/menus/mainMenu.ts';
+import { initI18n } from './config/i18n.ts';
 
-const i18n = await initI18n();
-console.log(i18n.t('appTitle'));
+await initI18n();
 
-await changeLanguage('es');
-console.log(i18n.t('appTitle'));
+while (!appState.exit) {
+  await mainMenu();
+}
