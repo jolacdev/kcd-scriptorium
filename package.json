@@ -8,7 +8,7 @@
   "scripts": {
     "clean": "rimraf dist",
     "build": "npm run clean && tsc -p tsconfig.build.json",
-    "dev": "nodemon --exec node --loader ts-node/esm src/index.ts",
+    "dev": "node --loader ts-node src/index.ts",
     "start": "echo \"Error: no production run script specified\" && exit 1",
     "lint": "eslint --fix",
     "lint:no-fix": "eslint",
@@ -40,7 +40,6 @@
     "eslint-plugin-prettier": "5.5.4",
     "globals": "16.3.0",
     "jiti": "2.5.1",
-    "nodemon": "3.1.10",
     "prettier": "3.6.2",
     "rimraf": "6.0.1",
     "ts-node": "10.9.2",
