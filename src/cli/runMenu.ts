@@ -1,6 +1,6 @@
 import prompts from 'prompts';
 
-type Option = {
+export type Option = {
   key: string;
   label: string;
   action: () => Promise<void>;
