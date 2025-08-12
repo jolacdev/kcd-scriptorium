@@ -2,9 +2,18 @@
   "appTitle": "KCD - Localization Toolkit (CLI)",
   "mainMenu": {
     "options": {
+      "moddingToolkit": "Modding Toolkit",
       "selectInstallFolder": "Select KCD installation folder",
       "changeLanguage": "Change language",
       "exit": "Exit"
+    }
+  },
+  "moddingMenu": {
+    "title": "Modding Toolkit - Select an option",
+    "options": {
+      "dualSubs": "Generate dual subtitles",
+      "categorizeItems": "Categorize items",
+      "removeTimers": "Remove conversation response timers"
     }
   },
   "gameFolderMenu": {

@@ -2,9 +2,18 @@
   "appTitle": "KCD - Kit de Herramientas para Localización (CLI)",
   "mainMenu": {
     "options": {
+      "moddingToolkit": "Kit de Herramientas de Modding",
       "selectInstallFolder": "Selecciona el directorio de instalación de KCD",
       "changeLanguage": "Cambiar idioma",
       "exit": "Salir"
+    }
+  },
+  "moddingMenu": {
+    "title": "Modding Toolkit - Selecciona una opción",
+    "options": {
+      "dualSubs": "Generar subtítulos dobles",
+      "categorizeItems": "Categorizar objetos",
+      "removeTimers": "Eliminar temporizadores de respuesta en las conversaciones"
     }
   },
   "gameFolderMenu": {
