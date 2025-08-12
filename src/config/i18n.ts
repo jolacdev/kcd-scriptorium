@@ -12,10 +12,12 @@ export enum SupportedLanguage {
   SPANISH = 'es',
 }
 
-export const initI18n = async () => {
+export const initI18n = async (
+  lng: SupportedLanguage = SupportedLanguage.ENGLISH,
+) => {
   await i18next.use(Backend).init({
-    fallbackLng: 'en',
-    lng: 'en',
+    fallbackLng: SupportedLanguage.ENGLISH,
+    lng,
     supportedLngs: Object.values(SupportedLanguage),
     backend: {
       loadPath: './src/locales/{{lng}}/{{ns}}.json',
@@ -23,8 +25,4 @@ export const initI18n = async () => {
   });
 
   return i18next;
-};
-
-export const changeLanguage = async (lng: string) => {
-  await i18next.changeLanguage(lng);
 };

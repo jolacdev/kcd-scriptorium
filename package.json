@@ -48,6 +48,7 @@
     "vitest": "3.2.4"
   },
   "dependencies": {
+    "conf": "14.0.0",
     "i18next": "25.3.2",
     "i18next-fs-backend": "2.6.0",
     "prompts": "2.4.2"

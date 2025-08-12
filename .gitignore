@@ -13,3 +13,6 @@ storybook-static
 
 # Test Coverage
 coverage
+
+# Store Variables
+kcd-toolkit-config.json

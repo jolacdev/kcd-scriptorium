@@ -4,11 +4,16 @@ import type { TFunction } from 'i18next';
 import { SupportedLanguage } from '../../config/i18n.ts';
 import { runMenu } from '../runMenu.ts';
 import type { Option } from '../runMenu.ts';
+import { setStoreSetting } from '../../config/store.ts';
 
 const handleChangeLanguage = async (
   language: SupportedLanguage,
 ): Promise<void> => {
   await i18next.changeLanguage(language);
+
+  if (i18next.resolvedLanguage === language) {
+    setStoreSetting('language', language);
+  }
 };
 
 const generateLanguageOptionLabel = (

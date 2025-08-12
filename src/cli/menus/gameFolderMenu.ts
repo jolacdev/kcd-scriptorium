@@ -2,6 +2,7 @@ import fs from 'fs';
 import i18next from 'i18next';
 import path from 'path';
 import prompts from 'prompts';
+import { setStoreSetting } from '../../config/store.ts';
 
 const RELATIVE_EXE_PATH = 'Bin/Win64/KingdomCome.exe';
 
@@ -30,5 +31,7 @@ export const gameFolderMenu = async () => {
     },
   });
 
-  return response.folderPath;
+  if (response.folderPath) {
+    setStoreSetting('gamePath', response.folderPath);
+  }
 };
