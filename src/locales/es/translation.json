@@ -2,9 +2,17 @@
   "appTitle": "KCD - Kit de Herramientas para Localización (CLI)",
   "mainMenu": {
     "options": {
-      "selectInstallFolder": "Selecciona el directorio donde está instalado Kingdom Come: Deliverance",
+      "selectInstallFolder": "Selecciona el directorio de instalación de KCD",
       "changeLanguage": "Cambiar idioma",
       "exit": "Salir"
+    }
+  },
+  "gameFolderMenu": {
+    "title": "Por favor, selecciona el directorio donde está instalado Kingdom Come: Deliverance",
+    "validations": {
+      "emptyPath": "El directorio no puede estar vacío",
+      "nonExistentPath": "Directorio no encontrado",
+      "invalidKCDFolder": "El directorio de instalación de KCD no es válido"
     }
   },
   "languageMenu": {
