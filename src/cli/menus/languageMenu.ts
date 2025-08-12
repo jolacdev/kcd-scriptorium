@@ -38,5 +38,5 @@ export const languageMenu = async () => {
     }),
   );
 
-  await runMenu(t('languageMenuTitle'), languageOptions);
+  await runMenu(t('title'), languageOptions);
 };

@@ -16,7 +16,7 @@
     }
   },
   "languageMenu": {
-    "languageMenuTitle": "Selecciona el idioma",
+    "title": "Selecciona el idioma",
     "options": {
       "en": "Inglés",
       "es": "Español"
