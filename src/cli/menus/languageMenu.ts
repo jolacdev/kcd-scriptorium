@@ -2,9 +2,9 @@ import i18next from 'i18next';
 import type { TFunction } from 'i18next';
 
 import { SupportedLanguage } from '../../config/i18n.ts';
+import { setStoreSetting } from '../../config/store.ts';
 import { runMenu } from '../runMenu.ts';
 import type { Option } from '../runMenu.ts';
-import { setStoreSetting } from '../../config/store.ts';
 
 const handleChangeLanguage = async (
   language: SupportedLanguage,
