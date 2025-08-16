@@ -130,4 +130,27 @@ describe('prompt wrapper', () => {
     expect(typeof isExit).toBe(typeof isMockedExit);
     expect(isExit).toBe(isMockedExit);
   });
+
+  it('should handle multiple prompts with correct responses', async () => {
+    const mockedResponse = ['john', 20, true, ['black', 'white']];
+    const questions: prompts.PromptObject[] = [
+      { message: 'Enter username', name: 'username', type: 'text' },
+      { message: 'Enter age', name: 'age', type: 'number' },
+      { message: 'Accept?', name: 'accept', type: 'confirm' },
+      {
+        message: 'Pick colors',
+        name: 'colors',
+        type: 'multiselect',
+        choices: [
+          { title: 'Black', value: 'black' },
+          { title: 'White', value: 'white' },
+        ],
+      },
+    ];
+
+    prompts.inject(mockedResponse);
+    const response = await prompt(questions);
+
+    expect(Object.values(response)).toEqual(mockedResponse);
+  });
 });
