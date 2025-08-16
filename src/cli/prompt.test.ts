@@ -82,6 +82,23 @@ describe('prompt wrapper', () => {
     expect(colors).toEqual([choices[0].value, choices[2].value]);
   });
 
+  it('should handle number type', async () => {
+    const mockedAge = 20;
+    const question = {
+      message: 'Age?',
+      name: 'age',
+      type: 'number',
+    } as const;
+
+    prompts.inject([mockedAge]);
+    const { age } = await prompt(question, {
+      onSubmit: onSubmitSpy,
+    });
+
+    expect(typeof age).toBe(typeof mockedAge);
+    expect(age).toBe(mockedAge);
+  });
+
   it('should handle confirm type', async () => {
     const isMockedConfirm = true;
     const question = {
