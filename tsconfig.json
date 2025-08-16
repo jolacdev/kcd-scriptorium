@@ -30,7 +30,8 @@
     "eslint.config.ts",
     "eslint.constants.ts",
     ".prettierrc",
-    "vitest.config.ts"
+    "vitest.config.ts",
+    "tests/**/*.ts"
   ],
   "exclude": ["node_modules", "dist"]
 }

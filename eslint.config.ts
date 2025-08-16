@@ -97,7 +97,6 @@ export default [
         {
           selector: 'interface',
           format: ['PascalCase'],
-          prefix: ['I'],
         },
         {
           selector: 'function',
