@@ -81,4 +81,42 @@ describe('prompt wrapper', () => {
     expectTypeOf(colors).toBeArray();
     expect(colors).toEqual([choices[0].value, choices[2].value]);
   });
+
+  it('should handle confirm type', async () => {
+    const isMockedConfirm = true;
+    const question = {
+      message: 'Accept?',
+      name: 'isConfirm',
+      type: 'confirm',
+    } as const;
+
+    prompts.inject([isMockedConfirm]);
+    const { isConfirm } = <{ isConfirm: typeof isMockedConfirm }>(
+      await prompt(question, {
+        onSubmit: onSubmitSpy,
+      })
+    );
+
+    expect(typeof isConfirm).toBe(typeof isMockedConfirm);
+    expect(isConfirm).toBe(isMockedConfirm);
+  });
+
+  it('should handle toggle type', async () => {
+    const isMockedExit = true;
+    const question = {
+      active: 'Yes, exit',
+      inactive: 'No, go back',
+      message: 'Exit?',
+      name: 'isExit',
+      type: 'toggle',
+    } as const;
+
+    prompts.inject([isMockedExit]);
+    const { isExit } = <{ isExit: typeof isMockedExit }>await prompt(question, {
+      onSubmit: onSubmitSpy,
+    });
+
+    expect(typeof isExit).toBe(typeof isMockedExit);
+    expect(isExit).toBe(isMockedExit);
+  });
 });
