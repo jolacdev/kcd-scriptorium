@@ -31,5 +31,12 @@
       "es": "Español"
     },
     "current": "(actual)"
+  },
+  "exitMenu": {
+    "title": "¿Estás seguro de que quieres salir?",
+    "options": {
+      "yes": "Sí, salir",
+      "no": "No, volver"
+    }
   }
 }

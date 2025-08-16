@@ -31,5 +31,12 @@
       "es": "Spanish"
     },
     "current": "(current)"
+  },
+  "exitMenu": {
+    "title": "Are you sure you want to exit?",
+    "options": {
+      "yes": "Yes, exit",
+      "no": "No, go back"
+    }
   }
 }

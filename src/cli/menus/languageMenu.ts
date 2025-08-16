@@ -1,10 +1,10 @@
 import i18next from 'i18next';
 import type { TFunction } from 'i18next';
+import type { Choice } from 'prompts';
 
 import { SupportedLanguage } from '../../config/i18n.ts';
 import { setStoreSetting } from '../../config/store.ts';
-import { runMenu } from '../runMenu.ts';
-import type { Option } from '../runMenu.ts';
+import { prompt } from '../prompt.ts';
 
 const handleChangeLanguage = async (
   language: SupportedLanguage,
@@ -30,13 +30,21 @@ const generateLanguageOptionLabel = (
 export const languageMenu = async () => {
   const t = i18next.getFixedT(null, null, 'languageMenu');
 
-  const languageOptions: Option[] = Object.values(SupportedLanguage).map(
+  const languageOptions: Choice[] = Object.values(SupportedLanguage).map(
     (lang) => ({
-      key: lang,
-      label: generateLanguageOptionLabel(lang, t),
-      action: () => handleChangeLanguage(lang),
+      title: generateLanguageOptionLabel(lang, t),
+      value: lang,
     }),
   );
 
-  await runMenu(t('title'), languageOptions);
+  const { value } = <{ value: SupportedLanguage }>await prompt({
+    choices: languageOptions,
+    message: t('title'),
+    name: 'value',
+    type: 'select',
+  });
+
+  if (value) {
+    await handleChangeLanguage(value);
+  }
 };

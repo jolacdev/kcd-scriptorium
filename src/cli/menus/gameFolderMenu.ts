@@ -1,18 +1,18 @@
 import fs from 'fs';
 import i18next from 'i18next';
 import path from 'path';
-import prompts from 'prompts';
 
 import { setStoreSetting } from '../../config/store.ts';
+import { prompt } from '../prompt.ts';
 
 const RELATIVE_EXE_PATH = 'Bin/Win64/KingdomCome.exe';
 
 export const gameFolderMenu = async () => {
   const t = i18next.getFixedT(null, null, 'gameFolderMenu');
 
-  const response = await prompts({
+  const { value } = await prompt({
     message: t('title'),
-    name: 'folderPath',
+    name: 'value',
     type: 'text',
     validate: (input: string) => {
       if (!input.trim()) {
@@ -32,7 +32,7 @@ export const gameFolderMenu = async () => {
     },
   });
 
-  if (response.folderPath) {
-    setStoreSetting('gamePath', response.folderPath);
+  if (value) {
+    setStoreSetting('gamePath', value);
   }
 };
