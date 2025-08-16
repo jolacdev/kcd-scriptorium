@@ -91,9 +91,7 @@ describe('prompt wrapper', () => {
     } as const;
 
     prompts.inject([mockedAge]);
-    const { age } = await prompt(question, {
-      onSubmit: onSubmitSpy,
-    });
+    const { age } = await prompt(question);
 
     expect(typeof age).toBe(typeof mockedAge);
     expect(age).toBe(mockedAge);
@@ -109,9 +107,7 @@ describe('prompt wrapper', () => {
 
     prompts.inject([isMockedConfirm]);
     const { isConfirm } = <{ isConfirm: typeof isMockedConfirm }>(
-      await prompt(question, {
-        onSubmit: onSubmitSpy,
-      })
+      await prompt(question)
     );
 
     expect(typeof isConfirm).toBe(typeof isMockedConfirm);
@@ -129,9 +125,7 @@ describe('prompt wrapper', () => {
     } as const;
 
     prompts.inject([isMockedExit]);
-    const { isExit } = <{ isExit: typeof isMockedExit }>await prompt(question, {
-      onSubmit: onSubmitSpy,
-    });
+    const { isExit } = <{ isExit: typeof isMockedExit }>await prompt(question);
 
     expect(typeof isExit).toBe(typeof isMockedExit);
     expect(isExit).toBe(isMockedExit);
