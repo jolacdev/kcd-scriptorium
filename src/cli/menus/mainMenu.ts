@@ -7,8 +7,6 @@ import { gameFolderMenu } from './gameFolderMenu.ts';
 import { languageMenu } from './languageMenu.ts';
 import { modMenu } from './modMenu.ts';
 
-const isGamePathSet = hasStoreSetting('gamePath');
-
 enum OptionKey {
   CHANGE_LANGUAGE = 'changeLanguage',
   EXIT = 'exit',
@@ -24,7 +22,8 @@ const menuOptions: Record<OptionKey, () => Promise<void>> = {
 };
 
 export const mainMenu = async () => {
-  // TODO: Update game directory selection in a global variable or somewhere so it can be updated without restarting the app.
+  const isGamePathSet = hasStoreSetting('gamePath');
+
   const { value } = <{ value: OptionKey }>await prompt({
     message: t('appTitle'),
     name: 'value',

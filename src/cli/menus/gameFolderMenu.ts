@@ -2,6 +2,7 @@ import fs from 'fs';
 import i18next from 'i18next';
 import path from 'path';
 
+import { appState } from '../../appState.ts';
 import { setStoreSetting } from '../../config/store.ts';
 import { prompt } from '../prompt.ts';
 
@@ -34,5 +35,6 @@ export const gameFolderMenu = async () => {
 
   if (value) {
     setStoreSetting('gamePath', value);
+    appState.kcdPath = value;
   }
 };

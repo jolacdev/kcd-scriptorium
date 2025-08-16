@@ -5,5 +5,5 @@ type AppState = {
 
 export const appState: AppState = {
   exit: false,
-  kcdPath: null,
+  kcdPath: null, // TODO: Check if this attribute is needed or if the store is enough
 };
