@@ -5,11 +5,6 @@ import { prompt } from './prompt.ts';
 describe('prompt wrapper', () => {
   const onSubmitSpy = vi.fn().mockName('onSubmit');
 
-  beforeEach(() => {
-    vi.clearAllMocks();
-    prompts.inject([]);
-  });
-
   it('should run a prompt, match the prompt message in onSubmit, and return the user input', async () => {
     const mockedUsername = 'username';
     const question = {
