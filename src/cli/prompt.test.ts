@@ -1,5 +1,4 @@
 import prompts from 'prompts';
-import { beforeEach, describe, expect, expectTypeOf, it, vi } from 'vitest';
 
 import { prompt } from './prompt.ts';
 

@@ -43,7 +43,7 @@ export default [
       // More details: https://eslint.org/docs/latest/use/configure/migration-guide#configuring-language-options
       globals: {
         ...globals.browser,
-        ...globals.jest,
+        ...globals.vitest,
         ...globals.node,
       },
     },
