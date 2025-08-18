@@ -7,7 +7,7 @@ import { gameFolderMenu } from './gameFolderMenu.ts';
 import { languageMenu } from './languageMenu.ts';
 import { modMenu } from './modMenu.ts';
 
-enum OptionKey {
+export enum OptionKey {
   CHANGE_LANGUAGE = 'changeLanguage',
   EXIT = 'exit',
   MODDING_TOOLKIT = 'moddingToolkit',
