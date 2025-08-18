@@ -6,14 +6,14 @@ describe('prompt wrapper', () => {
   const onSubmitSpy = vi.fn().mockName('onSubmit');
 
   it('should run a prompt, match the prompt message in onSubmit, and return the user input', async () => {
-    const mockedUsername = 'username';
+    const usernameInput = 'username';
     const question = {
       message: 'Enter username',
       name: 'value',
       type: 'text',
     } as const;
 
-    prompts.inject([mockedUsername]);
+    prompts.inject([usernameInput]);
 
     const { value } = await prompt(question, {
       onSubmit: onSubmitSpy,
@@ -21,7 +21,7 @@ describe('prompt wrapper', () => {
 
     expect(onSubmitSpy).toBeCalledTimes(1);
     expect(onSubmitSpy).promptsSubmitToHaveMatchedMessage(question.message);
-    expect(value).toBe(mockedUsername);
+    expect(value).toBe(usernameInput);
   });
 
   it('should handle select type', async () => {
@@ -77,39 +77,39 @@ describe('prompt wrapper', () => {
   });
 
   it('should handle number type', async () => {
-    const mockedAge = 20;
+    const ageInput = 20;
     const question = {
       message: 'Age?',
       name: 'age',
       type: 'number',
     } as const;
 
-    prompts.inject([mockedAge]);
+    prompts.inject([ageInput]);
     const { age } = await prompt(question);
 
-    expect(typeof age).toBe(typeof mockedAge);
-    expect(age).toBe(mockedAge);
+    expect(typeof age).toBe(typeof ageInput);
+    expect(age).toBe(ageInput);
   });
 
   it('should handle confirm type', async () => {
-    const isMockedConfirm = true;
+    const isConfirmInput = true;
     const question = {
       message: 'Accept?',
       name: 'isConfirm',
       type: 'confirm',
     } as const;
 
-    prompts.inject([isMockedConfirm]);
-    const { isConfirm } = <{ isConfirm: typeof isMockedConfirm }>(
+    prompts.inject([isConfirmInput]);
+    const { isConfirm } = <{ isConfirm: typeof isConfirmInput }>(
       await prompt(question)
     );
 
-    expect(typeof isConfirm).toBe(typeof isMockedConfirm);
-    expect(isConfirm).toBe(isMockedConfirm);
+    expect(typeof isConfirm).toBe(typeof isConfirmInput);
+    expect(isConfirm).toBe(isConfirmInput);
   });
 
   it('should handle toggle type', async () => {
-    const isMockedExit = true;
+    const isExitInput = true;
     const question = {
       active: 'Yes, exit',
       inactive: 'No, go back',
@@ -118,15 +118,15 @@ describe('prompt wrapper', () => {
       type: 'toggle',
     } as const;
 
-    prompts.inject([isMockedExit]);
-    const { isExit } = <{ isExit: typeof isMockedExit }>await prompt(question);
+    prompts.inject([isExitInput]);
+    const { isExit } = <{ isExit: typeof isExitInput }>await prompt(question);
 
-    expect(typeof isExit).toBe(typeof isMockedExit);
-    expect(isExit).toBe(isMockedExit);
+    expect(typeof isExit).toBe(typeof isExitInput);
+    expect(isExit).toBe(isExitInput);
   });
 
   it('should handle multiple prompts with correct responses', async () => {
-    const mockedResponse = ['john', 20, true, ['black', 'white']];
+    const userInputs = ['john', 20, true, ['black', 'white']];
     const questions: prompts.PromptObject[] = [
       { message: 'Enter username', name: 'username', type: 'text' },
       { message: 'Enter age', name: 'age', type: 'number' },
@@ -142,9 +142,9 @@ describe('prompt wrapper', () => {
       },
     ];
 
-    prompts.inject(mockedResponse);
+    prompts.inject(userInputs);
     const response = await prompt(questions);
 
-    expect(Object.values(response)).toEqual(mockedResponse);
+    expect(Object.values(response)).toEqual(userInputs);
   });
 });
