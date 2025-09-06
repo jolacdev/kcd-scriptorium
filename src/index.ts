@@ -1,11 +1,10 @@
-import { appState } from './appState.ts';
+import { AppState } from './AppStatee.ts';
 import { mainMenu } from './cli/menus/mainMenu.ts';
-import { initI18n } from './config/i18n.ts';
-import { getStoreSetting } from './config/store.ts';
+import { initI18n, SupportedLanguage } from './config/i18n.ts';
 
-const savedLanguage = getStoreSetting('language');
-await initI18n(savedLanguage);
+const state = AppState.getInstance();
+await initI18n(state.language ?? SupportedLanguage.ENGLISH);
 
-while (!appState.exit) {
+while (!state.exit) {
   await mainMenu();
 }
