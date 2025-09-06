@@ -8,17 +8,17 @@ import { languageMenu } from './languageMenu.ts';
 import { modMenu } from './modMenu.ts';
 
 export enum OptionKey {
+  CHANGE_INSTALL_FOLDER = 'changeInstallFolder',
   CHANGE_LANGUAGE = 'changeLanguage',
   EXIT = 'exit',
   MODDING_TOOLKIT = 'moddingToolkit',
-  SELECT_INSTALL_FOLDER = 'selectInstallFolder',
 }
 
 const menuOptions: Record<OptionKey, () => Promise<void>> = {
+  changeInstallFolder: gameFolderMenu,
   changeLanguage: languageMenu,
   exit: exitMenu,
   moddingToolkit: modMenu,
-  selectInstallFolder: gameFolderMenu,
 };
 
 export const mainMenu = async () => {
@@ -38,8 +38,8 @@ export const mainMenu = async () => {
           ]
         : []),
       {
-        title: `${t('mainMenu.options.selectInstallFolder')}${isGamePathSet ? ` (${getStoreSetting('gamePath')})` : ''}`,
-        value: OptionKey.SELECT_INSTALL_FOLDER,
+        title: `${t('mainMenu.options.changeInstallFolder')}${isGamePathSet ? ` (${getStoreSetting('gamePath')})` : ''}`,
+        value: OptionKey.CHANGE_INSTALL_FOLDER,
       },
       {
         title: t('mainMenu.options.changeLanguage'),

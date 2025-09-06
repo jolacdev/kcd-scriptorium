@@ -3,7 +3,7 @@
   "mainMenu": {
     "options": {
       "moddingToolkit": "Modding Toolkit",
-      "selectInstallFolder": "Select KCD installation folder",
+      "changeInstallFolder": "Change KCD installation folder",
       "changeLanguage": "Change language",
       "exit": "Exit"
     }

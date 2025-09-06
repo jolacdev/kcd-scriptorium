@@ -27,8 +27,8 @@ const buildPromptFixture = (gamePath = ''): Parameters<typeof prompts>[0] => ({
   choices: [
     ...(gamePath ? [modMenuFixture] : []),
     {
-      title: `mainMenu.options.selectInstallFolder${gamePath ? ` (${gamePath})` : ''}`,
-      value: OptionKey.SELECT_INSTALL_FOLDER,
+      title: `mainMenu.options.changeInstallFolder${gamePath ? ` (${gamePath})` : ''}`,
+      value: OptionKey.CHANGE_INSTALL_FOLDER,
     },
     {
       title: 'mainMenu.options.changeLanguage',
@@ -84,7 +84,7 @@ describe('mainMenu', () => {
       { fn: languageMenu, option: OptionKey.CHANGE_LANGUAGE },
       { fn: exitMenu, option: OptionKey.EXIT },
       { fn: modMenu, option: OptionKey.MODDING_TOOLKIT },
-      { fn: gameFolderMenu, option: OptionKey.SELECT_INSTALL_FOLDER },
+      { fn: gameFolderMenu, option: OptionKey.CHANGE_INSTALL_FOLDER },
     ];
 
     it.each(menuTestCases)(
