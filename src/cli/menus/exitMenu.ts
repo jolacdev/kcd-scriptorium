@@ -1,6 +1,6 @@
 import i18next from 'i18next';
 
-import { AppState } from '../../AppStatee.ts';
+import { AppState } from '../../AppState.ts';
 import { prompt } from '../prompt.ts';
 
 export const exitMenu = async () => {

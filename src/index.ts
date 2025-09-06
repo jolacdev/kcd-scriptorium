@@ -1,4 +1,4 @@
-import { AppState } from './AppStatee.ts';
+import { AppState } from './AppState.ts';
 import { mainMenu } from './cli/menus/mainMenu.ts';
 import { initI18n, SupportedLanguage } from './config/i18n.ts';
 

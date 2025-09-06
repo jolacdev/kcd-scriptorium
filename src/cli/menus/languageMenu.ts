@@ -2,7 +2,7 @@ import i18next from 'i18next';
 import type { TFunction } from 'i18next';
 import type { Choice } from 'prompts';
 
-import { AppState } from '../../AppStatee.ts';
+import { AppState } from '../../AppState.ts';
 import { SupportedLanguage } from '../../config/i18n.ts';
 import { setStoreSetting } from '../../config/store.ts';
 import { prompt } from '../prompt.ts';
