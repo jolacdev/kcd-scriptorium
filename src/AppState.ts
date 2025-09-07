@@ -1,5 +1,7 @@
 import { SupportedLanguage } from './config/i18n.ts';
 import { getStoreSetting, setStoreSetting } from './config/store.ts';
+import { isValidGamePath } from './utils/validators/isValidGamePath.ts';
+import { isValidLanguage } from './utils/validators/isValidLanguage.ts';
 
 export class AppState {
   private static instance: AppState;
@@ -9,8 +11,11 @@ export class AppState {
   private _language: null | SupportedLanguage = null;
 
   private constructor() {
-    this._gamePath = getStoreSetting('gamePath') ?? null;
-    this._language = getStoreSetting('language') ?? null;
+    const storedGamePath = getStoreSetting('gamePath') ?? '';
+    const storedLanguage = getStoreSetting('language') ?? '';
+
+    this._gamePath = isValidGamePath(storedGamePath) ? storedGamePath : null;
+    this._language = isValidLanguage(storedLanguage) ? storedLanguage : null;
   }
 
   public static getInstance(): AppState {
@@ -25,18 +30,36 @@ export class AppState {
     return this._gamePath;
   }
 
+  /**
+   *
+   * @param path - The path to the game installation directory
+   * @throws {Error} If the provided path is not a valid game path
+   */
   setGamePath(path: string) {
-    this._gamePath = path;
+    if (!isValidGamePath(path)) {
+      throw new Error('Invalid game path');
+    }
+
     setStoreSetting('gamePath', path);
+    this._gamePath = path;
   }
 
   get language() {
     return this._language;
   }
 
+  /**
+   *
+   * @param lang - The language to set
+   * @throws {Error} If the provided language is not supported
+   */
   setLanguage(lang: SupportedLanguage) {
-    this._language = lang;
+    if (!isValidLanguage(lang)) {
+      throw new Error('Invalid language');
+    }
+
     setStoreSetting('language', lang);
+    this._language = lang;
   }
 
   get exit() {

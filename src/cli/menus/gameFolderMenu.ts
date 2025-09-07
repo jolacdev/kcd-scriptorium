@@ -1,12 +1,9 @@
 import fs from 'fs';
 import i18next from 'i18next';
-import path from 'path';
 
 import { AppState } from '../../AppState.ts';
-import { setStoreSetting } from '../../config/store.ts';
+import { isValidGamePath } from '../../utils/validators/isValidGamePath.ts';
 import { prompt } from '../prompt.ts';
-
-const RELATIVE_EXE_PATH = 'Bin/Win64/KingdomCome.exe';
 
 export const gameFolderMenu = async () => {
   const t = i18next.getFixedT(null, null, 'gameFolderMenu');
@@ -24,8 +21,7 @@ export const gameFolderMenu = async () => {
         return t('validations.nonExistentPath');
       }
 
-      const absoluteExePath = path.join(input, RELATIVE_EXE_PATH);
-      if (!fs.existsSync(absoluteExePath)) {
+      if (!isValidGamePath(input)) {
         return t('validations.invalidKCDFolder');
       }
 
@@ -34,7 +30,6 @@ export const gameFolderMenu = async () => {
   });
 
   if (value) {
-    setStoreSetting('gamePath', value);
     AppState.getInstance().setGamePath(value);
   }
 };

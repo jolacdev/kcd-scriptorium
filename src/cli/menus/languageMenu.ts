@@ -4,7 +4,6 @@ import type { Choice } from 'prompts';
 
 import { AppState } from '../../AppState.ts';
 import { SupportedLanguage } from '../../config/i18n.ts';
-import { setStoreSetting } from '../../config/store.ts';
 import { prompt } from '../prompt.ts';
 
 const handleChangeLanguage = async (
@@ -13,7 +12,6 @@ const handleChangeLanguage = async (
   await i18next.changeLanguage(language);
 
   if (i18next.resolvedLanguage === language) {
-    setStoreSetting('language', language);
     AppState.getInstance().setLanguage(language);
   }
 };
