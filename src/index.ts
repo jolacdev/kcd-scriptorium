@@ -6,7 +6,7 @@ import { initI18n, SupportedLanguage } from './config/i18n.ts';
 const state = AppState.getInstance();
 await initI18n(state.language ?? SupportedLanguage.ENGLISH);
 
-if (!state.gamePath || !state.language) {
+if (!state.language || !state.gamePath) {
   await setupMenu();
 }
 
