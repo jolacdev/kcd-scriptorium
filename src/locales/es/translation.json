@@ -11,9 +11,40 @@
   "moddingMenu": {
     "title": "Modding Toolkit - Selecciona una opción",
     "options": {
-      "dualSubs": "Generar subtítulos dobles",
+      "dualSubsBasic": "Generar subtítulos dobles (básico)",
+      "dualSubsAdvanced": "Generar subtítulos dobles (avanzado)",
       "categorizeItems": "Categorizar objetos",
       "removeTimers": "Eliminar temporizadores de respuesta en las conversaciones"
+    },
+    "modPromptsMenu": {
+      "prompts": {
+        "selectMainLanguage": "Selecciona el idioma principal",
+        "selectSecondaryLanguage": "Selecciona el idioma secundario",
+        "dualSubsAdvanced": {
+          "hasPrefixes": "¿Quieres añadir prefijos de idioma? (ej. [ES] - Texto de prueba.)",
+          "hasColor": "¿Quieres añadir un color para el idioma secundario?",
+          "subtitleColor": "Introduce un color hexadecimal válido (ej. {{color}})"
+        }
+      },
+      "validations": {
+        "invalidHexColor": "Introduce un color hexadecimal válido"
+      },
+      "gameSupportedLanguages": {
+        "zh": "Chino",
+        "cs": "Checo",
+        "en": "Inglés",
+        "fr": "Francés",
+        "de": "Alemán",
+        "it": "Italiano",
+        "ja": "Japonés",
+        "ko": "Coreano",
+        "pl": "Polaco",
+        "pt": "Portugués",
+        "ru": "Ruso",
+        "es": "Español",
+        "tr": "Turco",
+        "uk": "Ucraniano"
+      }
     }
   },
   "gameFolderMenu": {

@@ -27,7 +27,7 @@ type PromptTypeMap = {
 export function prompt<Name extends string, Type extends keyof PromptTypeMap>(
   question: PromptObject<Name> & { type: Type },
   options?: Options,
-): Promise<{ [T in Name]: PromptTypeMap[Type] }>;
+): Promise<{ [T in Name]: PromptTypeMap[Type] | undefined }>;
 
 // Overload for array params and other cases (original prompts signature).
 export function prompt(

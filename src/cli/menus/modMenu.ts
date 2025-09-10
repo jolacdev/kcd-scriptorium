@@ -1,18 +1,24 @@
 import i18next from 'i18next';
 
 import { prompt } from '../prompt.ts';
+import { modPromptsMenu } from './modMenu/modPromptsMenu.ts';
+
+enum OptionKey {
+  CATEGORIZE_ITEMS = 'categorizeItems',
+  DUAL_SUBS_ADVANCED = 'dualSubsAdvanced',
+  DUAL_SUBS_BASIC = 'dualSubsBasic',
+  REMOVE_TIMERS = 'removeTimers',
+}
 
 export const modMenu = async () => {
   const t = i18next.getFixedT(null, null, 'moddingMenu');
 
-  enum OptionKey {
-    CATEGORIZE_ITEMS = 'categorizeItems',
-    DUAL_SUBS = 'dualSubs',
-    REMOVE_TIMERS = 'removeTimers',
-  }
-
-  const modOptions = [
-    { title: t('options.dualSubs'), value: OptionKey.DUAL_SUBS },
+  const modOptions: { title: string; value: OptionKey }[] = [
+    { title: t('options.dualSubsBasic'), value: OptionKey.DUAL_SUBS_BASIC },
+    {
+      title: t('options.dualSubsAdvanced'),
+      value: OptionKey.DUAL_SUBS_ADVANCED,
+    },
     { title: t('options.categorizeItems'), value: OptionKey.CATEGORIZE_ITEMS },
     {
       title: t('options.removeTimers'),
@@ -20,15 +26,30 @@ export const modMenu = async () => {
     },
   ];
 
-  const { value } = <{ value: OptionKey[] }>await prompt({
+  const { selectedOptions } = <{ selectedOptions?: OptionKey[] }>await prompt({
     choices: modOptions,
     message: t('title'),
     min: 1,
-    name: 'value',
+    name: 'selectedOptions',
     type: 'multiselect',
   });
 
-  if (value.length) {
-    console.log({ selectedItems: value }); // TODO: Change
+  if (!selectedOptions || !selectedOptions.length) {
+    return;
   }
+
+  const hasDualSubsBasic = selectedOptions.includes(OptionKey.DUAL_SUBS_BASIC);
+  const hasDualSubsAdvanced = selectedOptions.includes(
+    OptionKey.DUAL_SUBS_ADVANCED,
+  );
+  const hasCategories = selectedOptions.includes(OptionKey.CATEGORIZE_ITEMS);
+
+  const response = await modPromptsMenu({
+    hasAnyDualSubs: hasDualSubsBasic || hasDualSubsAdvanced,
+    hasCategories,
+    hasDualSubsAdvanced,
+  });
+
+  // TODO: Add logic to handle selected options by the user.
+  console.log({ ...response });
 };

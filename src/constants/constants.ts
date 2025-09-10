@@ -1,0 +1,16 @@
+export enum GameSupportedLanguage {
+  CHINESE = 'zh',
+  CZECH = 'cs',
+  ENGLISH = 'en',
+  FRENCH = 'fr',
+  GERMAN = 'de',
+  ITALIAN = 'it',
+  JAPANESE = 'ja',
+  KOREAN = 'ko',
+  POLISH = 'pl',
+  PORTUGUESE = 'pt',
+  RUSSIAN = 'ru',
+  SPANISH = 'es',
+  TURKISH = 'tr',
+  UKRAINIAN = 'uk',
+}
