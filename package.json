@@ -14,7 +14,8 @@
     "lint:no-fix": "eslint",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:gui": "vitest --ui"
+    "test:gui": "vitest --ui",
+    "validate:data": "node --experimental-transform-types --loader ts-node scripts/validateData.ts"
   },
   "keywords": [
     "cli",
