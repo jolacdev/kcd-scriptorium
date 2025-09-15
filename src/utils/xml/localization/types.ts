@@ -7,7 +7,7 @@ type TransformerOptions = {
   hasDualSubs: boolean;
 };
 
-type DialogTransformerOptions = TransformerOptions & {
+export type DialogTransformerOptions = TransformerOptions & {
   color?: string;
 };
 

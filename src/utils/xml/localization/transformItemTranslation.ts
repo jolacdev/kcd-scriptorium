@@ -11,7 +11,7 @@ const MIN_CHARACTERS_TO_BE_DESCRIPTION = 50;
  * - Adds dual subtitles only for item descriptions, detected by a minimum character threshold.
  * - Prepends item categories only for items to improve in-game sorting, based on character threshold and category availability.
  *
- * @param {ItemTransformerOptions} options - The options for transforming the item translation.
+ * @param {ItemTransformerOptions} options - The options for transforming the translation.
  * @returns {string} The transformed string to be placed in the third cell of the corresponding row.
  */
 export const transformItemTranslation = ({
