@@ -23,7 +23,6 @@
           "secondary": "Select secondary language"
         },
         "dualSubsAdvanced": {
-          "hasPrefixes": "Add language prefixes to the dialogs? (e.g., [EN] - Sample text.)",
           "hasColor": "Add a custom color to the secondary language?",
           "subtitleColor": "Enter a valid hexadecimal color (e.g. {{color}})"
         }

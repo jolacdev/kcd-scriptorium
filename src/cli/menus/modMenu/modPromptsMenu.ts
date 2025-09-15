@@ -14,7 +14,6 @@ type ModPromptResult = {
   mainLanguage?: GameSupportedLanguage;
   secondaryLanguage?: GameSupportedLanguage;
   subtitleColor?: string;
-  hasPrefixes?: boolean;
 };
 
 const DEFAULT_SUBTITLE_COLOR = '#F7E095';
@@ -34,17 +33,11 @@ export const modPromptsMenu = async ({
     value: lang,
   }));
 
-  const {
-    mainLanguage,
-    secondaryLanguage,
-    subtitleColor,
-    hasPrefixes = false,
-  } = <
+  const { mainLanguage, secondaryLanguage, subtitleColor } = <
     {
       mainLanguage?: GameSupportedLanguage;
       secondaryLanguage?: GameSupportedLanguage;
       subtitleColor?: string;
-      hasPrefixes?: boolean;
     }
   >await prompt([
     {
@@ -67,12 +60,6 @@ export const modPromptsMenu = async ({
     },
     {
       initial: false,
-      message: t('prompts.dualSubsAdvanced.hasPrefixes'),
-      name: 'hasPrefixes',
-      type: hasDualSubsAdvanced ? 'confirm' : null,
-    },
-    {
-      initial: false,
       message: t('prompts.dualSubsAdvanced.hasColor'),
       name: 'hasColor',
       type: hasDualSubsAdvanced ? 'confirm' : null,
@@ -89,5 +76,5 @@ export const modPromptsMenu = async ({
     },
   ]);
 
-  return { mainLanguage, secondaryLanguage, subtitleColor, hasPrefixes };
+  return { mainLanguage, secondaryLanguage, subtitleColor };
 };
