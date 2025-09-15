@@ -23,8 +23,8 @@
           "secondary": "Selecciona el idioma secundario"
         },
         "dualSubsAdvanced": {
-          "hasPrefixes": "¿Quieres añadir prefijos de idioma? (ej. [ES] - Texto de prueba.)",
-          "hasColor": "¿Quieres añadir un color para el idioma secundario?",
+          "hasPrefixes": "¿Añadir prefijos de idioma a los diálogos? (ej. [ES] - Texto de prueba.)",
+          "hasColor": "¿Añadir un color personalizado al idioma secundario?",
           "subtitleColor": "Introduce un color hexadecimal válido (ej. {{color}})"
         }
       },
