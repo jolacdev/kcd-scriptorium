@@ -15,3 +15,7 @@ export type ItemTransformerOptions = TransformerOptions & {
   language: GameSupportedLanguage;
   hasCategories: boolean;
 };
+
+export type QuestTransformerOptions = TransformerOptions;
+
+export type MenuTransformerOptions = TransformerOptions;

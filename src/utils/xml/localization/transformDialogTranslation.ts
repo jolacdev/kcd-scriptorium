@@ -16,7 +16,7 @@ const applyFontColor = (text: string, color?: string): string =>
 /**
  * @note This function is intended to work with `text_ui_dialog.xml` translations.
  *
- * Transforms an item translation:
+ * Transforms a translation:
  * - Adds dual subtitles if `hasDualSubs` is true and a translation exists.
  * - Applies a custom color to the secondary translation if `color` is provided.
  *

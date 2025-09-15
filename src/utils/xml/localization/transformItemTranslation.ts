@@ -7,7 +7,7 @@ const MIN_CHARACTERS_TO_BE_DESCRIPTION = 50;
 /**
  * @note This function is intended to work with `text_ui_items.xml` translations.
  *
- * Transforms an item translation:
+ * Transforms a translation:
  * - Adds dual subtitles only for item descriptions, detected by a minimum character threshold.
  * - Prepends item categories only for items to improve in-game sorting, based on character threshold and category availability.
  *
