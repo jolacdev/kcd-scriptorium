@@ -49,15 +49,19 @@ export const modPromptsMenu = async ({
   >await prompt([
     {
       choices: gameLanguageOptions,
-      message: t('selectLanguages.main'),
+      message: t('prompts.selectLanguage.main'),
       name: 'mainLanguage',
       type: hasAnyDualSubs || hasCategories ? 'select' : null,
     },
     {
-      message: t('selectLanguages.secondary'),
+      message: t('prompts.selectLanguage.secondary'),
       name: 'secondaryLanguage',
       choices: (prev: GameSupportedLanguage) =>
-        gameLanguageOptions.filter(({ value }) => value !== prev),
+        gameLanguageOptions.filter(({ value }) =>
+          prev === GameSupportedLanguage.ENGLISH
+            ? value !== prev
+            : value === GameSupportedLanguage.ENGLISH,
+        ),
       type: (prev: GameSupportedLanguage) =>
         hasAnyDualSubs && prev ? 'select' : null,
     },

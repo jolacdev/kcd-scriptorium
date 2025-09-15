@@ -18,8 +18,10 @@
     },
     "modPromptsMenu": {
       "prompts": {
-        "selectMainLanguage": "Select main language",
-        "selectSecondaryLanguage": "Select secondary language",
+        "selectLanguage": {
+          "main": "Select main language",
+          "secondary": "Select secondary language"
+        },
         "dualSubsAdvanced": {
           "hasPrefixes": "Do you want to add language prefixes? (e.g., [EN] - Sample text.)",
           "hasColor": "Do you want to add a color for the secondary language?",
