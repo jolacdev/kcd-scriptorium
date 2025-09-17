@@ -18,22 +18,22 @@ const writeFileWithDirsSync = (filePath: string, content: string) => {
 
 /**
  * Reads the content of an XML file as a string.
- * @param xmlFilePath - Path to the XML file
- * @returns File content as string, or undefined if the file does not exist
+ * @param xmlFilePath - Absolute path to the XML file.
+ * @returns File content as string, or undefined if the file does not exist.
  */
 export const readXml = (xmlFilePath: XmlFilePath) => readFileSync(xmlFilePath);
 
 /**
  * Writes content to an XML file, creating missing directories if necessary.
- * @param xmlFilePath - Path to the XML file
- * @param content - Content to write
+ * @param xmlFilePath - Absolute path to the XML file.
+ * @param content - Content to write.
  */
 export const writeXml = (xmlFilePath: XmlFilePath, content: string) =>
   writeFileWithDirsSync(xmlFilePath, content);
 
 /**
  * Creates an empty .tbl file next to the given XML file.
- * @param xmlFilePath - Path to the XML file
+ * @param xmlFilePath - Absolute path to the XML file.
  */
 export const writeEmptyTbl = (xmlFilePath: XmlFilePath) => {
   const fileExtension = path.extname(xmlFilePath);
@@ -45,3 +45,13 @@ export const writeEmptyTbl = (xmlFilePath: XmlFilePath) => {
 
   writeFileWithDirsSync(tblFilePath, '');
 };
+
+/**
+ * Checks if the given file path ends with `.xml`.
+ *
+ * Acts as a type guard, narrowing the type to `XmlFilePath`.
+ * @param filePath - Path to check.
+ * @returns True if the path is an XML file.
+ */
+export const isXmlFile = (filePath: string): filePath is XmlFilePath =>
+  /\.xml$/i.test(filePath);
