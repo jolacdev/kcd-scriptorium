@@ -1,5 +1,6 @@
 import i18next from 'i18next';
 
+import { generateLocalizationFiles } from '../../utils/generateLocalizationFiles.ts';
 import { prompt } from '../prompt.ts';
 import { modPromptsMenu } from './modMenu/modPromptsMenu.ts';
 
@@ -44,12 +45,26 @@ export const modMenu = async () => {
   );
   const hasCategories = selectedOptions.includes(OptionKey.CATEGORIZE_ITEMS);
 
-  const response = await modPromptsMenu({
-    hasAnyDualSubs: hasDualSubsBasic || hasDualSubsAdvanced,
-    hasCategories,
-    hasDualSubsAdvanced,
-  });
+  const { mainLanguage, secondaryLanguage, subtitleColor } =
+    await modPromptsMenu({
+      hasAnyDualSubs: hasDualSubsBasic || hasDualSubsAdvanced,
+      hasCategories,
+      hasDualSubsAdvanced,
+    });
 
-  // TODO: Add logic to handle selected options by the user.
-  console.log({ ...response });
+  if (!mainLanguage) {
+    return;
+  }
+
+  // TODO: Search for the PAK file, read it and access the correspondent XML
+  const tempBasePath =
+    'C:\\Users\\Kabocha\\Desktop\\Pruebas KCD XML\\Spanish_xml';
+
+  generateLocalizationFiles({
+    mainLanguage,
+    subtitleColor,
+    xmlSourcePath: tempBasePath,
+    hasCategories,
+    hasDualSubs: Boolean(mainLanguage && secondaryLanguage),
+  });
 };

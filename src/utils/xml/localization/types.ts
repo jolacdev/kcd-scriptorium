@@ -1,30 +1,35 @@
 import { GameSupportedLanguage } from '../../../constants/constants.ts';
 
-// TODO: Add a type to accept all the different attributes and limit the specific ones.
-type TransformerOptions = {
-  id: string;
+export type BaseTransformerOptions = {
   firstTranslation: string;
   lastTranslation: string;
   hasDualSubs: boolean;
+  isTranslated: boolean;
 };
 
-export type DialogTransformerOptions = TransformerOptions & {
-  color?: string;
-};
-
-export type ItemTransformerOptions = TransformerOptions & {
+export type ExtendedTransformerOptions = {
+  id: string;
+  color: string;
   language: GameSupportedLanguage;
   hasCategories: boolean;
 };
 
-export type QuestTransformerOptions = TransformerOptions;
+export type DialogTransformerOptions = BaseTransformerOptions &
+  Pick<ExtendedTransformerOptions, 'color'>;
 
-export type MenuTransformerOptions = TransformerOptions;
+export type ItemTransformerOptions = BaseTransformerOptions &
+  Pick<ExtendedTransformerOptions, 'hasCategories' | 'id' | 'language'>;
 
-export type SoulTransformerOptions = TransformerOptions;
+export type QuestTransformerOptions = BaseTransformerOptions &
+  Pick<ExtendedTransformerOptions, 'id'>;
 
-export type IngameTransformerOptions = TransformerOptions & {
-  color?: string;
-};
+export type MenuTransformerOptions = BaseTransformerOptions &
+  Pick<ExtendedTransformerOptions, 'id'>;
 
-export type HUDTransformerOptions = TransformerOptions;
+export type SoulTransformerOptions = BaseTransformerOptions &
+  Pick<ExtendedTransformerOptions, 'id'>;
+
+export type IngameTransformerOptions = BaseTransformerOptions &
+  Pick<ExtendedTransformerOptions, 'color' | 'id'>;
+
+export type HUDTransformerOptions = BaseTransformerOptions;
