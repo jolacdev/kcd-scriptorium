@@ -6,6 +6,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "clean": "rimraf dist",
     "build": "npm run clean && tsc -p tsconfig.build.json",
     "dev": "node --experimental-transform-types --loader ts-node src/index.ts",
