@@ -1,7 +1,10 @@
-import path from 'path';
 import yauzl, { Entry, ZipFile } from 'yauzl';
 
 import { LocalizationFile } from '../constants/constants.ts';
+
+type PakFilePath = `${string}.pak`;
+
+// TODO: Add error messages to i18n.
 
 /**
  * Reads the content of a single ZIP entry as UTF-8 text.
@@ -32,27 +35,24 @@ const processEntry = (entry: Entry, zipFile: ZipFile): Promise<string> =>
   });
 
 /**
- * Reads an XML file from within a PAK (ZIP) archive.
+ * Reads a file from ZIP archive.
  *
- * Iterates through the PAK entries until the requested XML file is found,
+ * Iterates through the ZIP entries until the requested file is found,
  * then extracts and returns its contents as UTF-8 text.
  *
- * @param {string} pakPath - Full path to the `.pak` file (ZIP archive).
- * @param {LocalizationFile} xmlFileName - The name of the XML file to extract.
- * @returns {Promise<string>} Resolves with the XML file content if found.
+ * @param {string} zipPath - Full path to the ZIP archive (including the archive).
+ * @param {string} fileName - The name of the file to read.
+ * @returns {Promise<string>} Resolves with the file content if found.
  *
  * @throws Will reject if:
- *   - The PAK file cannot be opened.
- *   - The target XML file is not found inside the archive.
+ *   - The ZIP file cannot be opened.
+ *   - The target file is not found inside the archive.
  *   - An error occurs while reading the entry stream.
  */
-export const readXmlFromPak = (
-  pakPath: string,
-  xmlFileName: LocalizationFile,
-): Promise<string> =>
+const readFileFromZip = (zipPath: string, fileName: string): Promise<string> =>
   new Promise((resolve, reject) => {
     // NOTE: `lazyEntries` indicates that entries should be read only when readEntry() is called.
-    yauzl.open(pakPath, { lazyEntries: true }, (err, zipFile) => {
+    yauzl.open(zipPath, { lazyEntries: true }, (err, zipFile) => {
       if (err || !zipFile) {
         reject(err ?? new Error('Failed to open package file'));
         return;
@@ -63,7 +63,7 @@ export const readXmlFromPak = (
       zipFile.readEntry();
 
       zipFile.on('entry', async (entry: Entry) => {
-        isTargetFile = entry.fileName === xmlFileName;
+        isTargetFile = entry.fileName === fileName;
 
         if (isTargetFile) {
           try {
@@ -81,12 +81,25 @@ export const readXmlFromPak = (
         zipFile.close();
 
         if (!isTargetFile) {
-          reject(
-            new Error(
-              `❌ File "${xmlFileName}" not found in path "${pakPath}".`,
-            ),
-          );
+          reject(new Error(`❌ File "${fileName}" not found in "${zipPath}".`));
         }
       });
     });
   });
+
+/**
+ * Reads a specific XML localization file from a PAK archive.
+ *
+ * @param {PakFilePath} pakPath - Path to the PAK archive.
+ * @param {LocalizationFile} xmlFileName - The XML file to read.
+ * @returns {Promise<string>} Resolves with the file’s contents as UTF-8 text.
+ *
+ * @throws Will reject if:
+ *   - The PAK file cannot be opened.
+ *   - The XML file is not found inside the archive.
+ *   - An error occurs while reading the entry stream.
+ */
+export const readXmlFromPak = (
+  pakPath: PakFilePath,
+  xmlFileName: LocalizationFile,
+): Promise<string> => readFileFromZip(pakPath, xmlFileName);
