@@ -35,6 +35,8 @@
     "@types/jest": "30.0.0",
     "@types/node": "24.2.0",
     "@types/prompts": "2.4.9",
+    "@types/yauzl": "2.10.3",
+    "@types/yazl": "3.3.0",
     "@typescript-eslint/parser": "8.39.0",
     "@vitest/ui": "3.2.4",
     "eslint": "9.32.0",
@@ -54,6 +56,8 @@
     "conf": "14.0.0",
     "i18next": "25.3.2",
     "i18next-fs-backend": "2.6.0",
-    "prompts": "2.4.2"
+    "prompts": "2.4.2",
+    "yauzl": "3.2.0",
+    "yazl": "3.3.1"
   }
 }
