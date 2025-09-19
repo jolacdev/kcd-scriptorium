@@ -17,9 +17,8 @@ export const transformIngameTranslation = ({
   firstTranslation,
   lastTranslation,
   hasDualSubs,
+  isTranslated,
 }: IngameTransformerOptions) => {
-  const isTranslated = firstTranslation !== lastTranslation;
-
   if (!hasDualSubs || !isTranslated) {
     return firstTranslation;
   }

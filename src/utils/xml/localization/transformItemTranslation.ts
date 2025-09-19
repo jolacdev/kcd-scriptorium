@@ -21,11 +21,10 @@ export const transformItemTranslation = ({
   lastTranslation,
   hasCategories,
   hasDualSubs,
+  isTranslated,
 }: ItemTransformerOptions) => {
   const category = findLocalizedCategoryByItemId(id, language);
-
   const isItemCategorized = !!category;
-  const isTranslated = firstTranslation !== lastTranslation;
   const isDescription =
     !isItemCategorized &&
     firstTranslation.length >= MIN_CHARACTERS_TO_BE_DESCRIPTION;

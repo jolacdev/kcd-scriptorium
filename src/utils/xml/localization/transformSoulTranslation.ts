@@ -15,10 +15,9 @@ export const transformSoulTranslation = ({
   firstTranslation,
   lastTranslation,
   hasDualSubs,
+  isTranslated,
 }: SoulTransformerOptions) => {
   // TODO: TEMP Comment: blackList = ['ui_fac_', 'stat_']
-  const isTranslated = firstTranslation !== lastTranslation;
-
   if (!hasDualSubs || !isTranslated) {
     return firstTranslation;
   }
