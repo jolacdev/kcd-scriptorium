@@ -24,7 +24,6 @@ export const transformItemTranslation = ({
   isTranslated,
 }: ItemTransformerOptions) => {
   const category = findLocalizedCategoryByItemId(id, language);
-
   const isItemCategorized = !!category;
   const isDescription =
     !isItemCategorized &&
