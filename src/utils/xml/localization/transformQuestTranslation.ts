@@ -15,9 +15,8 @@ export const transformQuestTranslation = ({
   firstTranslation,
   lastTranslation,
   hasDualSubs,
+  isTranslated,
 }: QuestTransformerOptions) => {
-  const isTranslated = firstTranslation !== lastTranslation;
-
   if (!hasDualSubs || !isTranslated) {
     return firstTranslation;
   }

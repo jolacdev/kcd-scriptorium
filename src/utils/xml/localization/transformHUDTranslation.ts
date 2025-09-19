@@ -14,9 +14,8 @@ export const transformHUDTranslation = ({
   firstTranslation,
   lastTranslation,
   hasDualSubs,
+  isTranslated,
 }: HUDTransformerOptions) => {
-  const isTranslated = firstTranslation !== lastTranslation;
-
   const shouldAddDualSubs = hasDualSubs && isTranslated;
 
   return shouldAddDualSubs
