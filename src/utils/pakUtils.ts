@@ -5,7 +5,7 @@ import yazl from 'yazl';
 
 import { LocalizationFile } from '../constants/constants.ts';
 
-type PakFilePath = `${string}.pak`;
+export type PakFilePath = `${string}.pak`;
 
 // TODO: Add error messages to i18n.
 
@@ -160,3 +160,13 @@ export const writePak = async (
 
     zipfile.end();
   });
+
+/**
+ * Checks if the given file path ends with `.pak`.
+ *
+ * Acts as a type guard, narrowing the type to `PakFilePath`.
+ * @param filePath - Path to check.
+ * @returns True if the path is an PAK file.
+ */
+export const isPakFile = (filePath: string): filePath is PakFilePath =>
+  /\.pak$/i.test(filePath);

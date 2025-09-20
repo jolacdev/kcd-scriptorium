@@ -1,6 +1,8 @@
 import i18next from 'i18next';
 
+import { AppState } from '../../AppState.ts';
 import { generateLocalizationFiles } from '../../utils/generateLocalizationFiles.ts';
+import { getCorrespondingLocalizationPakPath } from '../../utils/getCorrespondingLocalizationPakPath.ts';
 import { prompt } from '../prompt.ts';
 import { modPromptsMenu } from './modMenu/modPromptsMenu.ts';
 
@@ -12,6 +14,7 @@ enum OptionKey {
 }
 
 export const modMenu = async () => {
+  const appState = AppState.getInstance();
   const t = i18next.getFixedT(null, null, 'moddingMenu');
 
   const modOptions: { title: string; value: OptionKey }[] = [
@@ -56,14 +59,21 @@ export const modMenu = async () => {
     return;
   }
 
-  // TODO: Search for the PAK file, read it and access the correspondent XML
-  const tempBasePath =
-    'C:\\Users\\Kabocha\\Desktop\\Pruebas KCD XML\\Spanish_xml';
+  const inputPak = getCorrespondingLocalizationPakPath(
+    appState.gamePath!,
+    mainLanguage,
+    secondaryLanguage,
+  );
+
+  if (!inputPak) {
+    // TODO: Handle
+    return;
+  }
 
   generateLocalizationFiles({
+    inputPak,
     mainLanguage,
     subtitleColor,
-    xmlSourcePath: tempBasePath,
     hasCategories,
     hasDualSubs: Boolean(mainLanguage && secondaryLanguage),
   });

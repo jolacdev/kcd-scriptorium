@@ -15,6 +15,28 @@ export enum GameSupportedLanguage {
   UKRAINIAN = 'uk',
 }
 
+type LocalizationPakFile = `${string}_xml.pak`;
+
+export const localizationPakMap: Record<
+  GameSupportedLanguage,
+  LocalizationPakFile
+> = {
+  [GameSupportedLanguage.CHINESE]: 'Chineses_xml.pak',
+  [GameSupportedLanguage.CZECH]: 'Czech_xml.pak',
+  [GameSupportedLanguage.ENGLISH]: 'English_xml.pak',
+  [GameSupportedLanguage.FRENCH]: 'French_xml.pak',
+  [GameSupportedLanguage.GERMAN]: 'German_xml.pak',
+  [GameSupportedLanguage.ITALIAN]: 'Italian_xml.pak',
+  [GameSupportedLanguage.JAPANESE]: 'Japanese_xml.pak',
+  [GameSupportedLanguage.KOREAN]: 'Korean_xml.pak',
+  [GameSupportedLanguage.POLISH]: 'Polish_xml.pak',
+  [GameSupportedLanguage.PORTUGUESE]: 'Portuguese_xml.pak',
+  [GameSupportedLanguage.RUSSIAN]: 'Russian_xml.pak',
+  [GameSupportedLanguage.SPANISH]: 'Spanish_xml.pak',
+  [GameSupportedLanguage.TURKISH]: 'Turkish_xml.pak',
+  [GameSupportedLanguage.UKRAINIAN]: 'Ukrainian_xml.pak',
+};
+
 export enum Folder {
   Data = 'Data',
   Localization = 'Localization',
