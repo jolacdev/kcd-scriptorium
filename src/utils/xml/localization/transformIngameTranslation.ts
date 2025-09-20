@@ -6,7 +6,7 @@ import type { IngameTransformerOptions } from './types.ts';
  * @note This function is intended to work with `text_ui_ingame.xml` translations.
  *
  * Transforms a translation:
- * - Adds dual subtitles (for descriptions) if `hasDualSubs` is true and a translation exists.
+ * - Adds dual-language (for descriptions) if `hasDualLanguage` is true and a translation exists.
  *
  * @param {IngameTransformerOptions} options - The options for transforming the translation.
  * @returns {string} The transformed string to be placed in the third cell of the corresponding row.
@@ -16,10 +16,10 @@ export const transformIngameTranslation = ({
   color,
   firstTranslation,
   lastTranslation,
-  hasDualSubs,
+  hasDualLanguage,
   isTranslated,
 }: IngameTransformerOptions) => {
-  if (!hasDualSubs || !isTranslated) {
+  if (!hasDualLanguage || !isTranslated) {
     return firstTranslation;
   }
 

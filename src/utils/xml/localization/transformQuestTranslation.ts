@@ -5,7 +5,7 @@ import type { QuestTransformerOptions } from './types.ts';
  * @note This function is intended to work with `text_ui_quest.xml` translations.
  *
  * Transforms a translation:
- * - Adds dual subtitles if `hasDualSubs` is true and a translation exists.
+ * - Adds dual-language if `hasDualLanguage` is true and a translation exists.
  *
  * @param {QuestTransformerOptions} options - The options for transforming the translation.
  * @returns {string} The transformed string to be placed in the third cell of the corresponding row.
@@ -14,10 +14,10 @@ export const transformQuestTranslation = ({
   id,
   firstTranslation,
   lastTranslation,
-  hasDualSubs,
+  hasDualLanguage,
   isTranslated,
 }: QuestTransformerOptions) => {
-  if (!hasDualSubs || !isTranslated) {
+  if (!hasDualLanguage || !isTranslated) {
     return firstTranslation;
   }
 

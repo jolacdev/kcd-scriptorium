@@ -5,24 +5,24 @@ import { GameSupportedLanguage } from '../../../constants/constants.ts';
 import { prompt } from '../../prompt.ts';
 
 type ModPromptsOptions = {
-  hasAnyDualSubs: boolean;
   hasCategories: boolean;
-  hasDualSubsAdvanced: boolean;
+  hasDialogColor: boolean;
+  hasDualLanguage: boolean;
 };
 
 type ModPromptResult = {
+  dialogColor?: string;
   mainLanguage?: GameSupportedLanguage;
   secondaryLanguage?: GameSupportedLanguage;
-  subtitleColor?: string;
 };
 
-const DEFAULT_SUBTITLE_COLOR = '#F7E095';
+const DEFAULT_DIALOG_COLOR = '#F7E095';
 const HEX_COLOR_REGEX = /^#([0-9A-Fa-f]{6})$/;
 
 export const modPromptsMenu = async ({
-  hasAnyDualSubs,
   hasCategories,
-  hasDualSubsAdvanced,
+  hasDialogColor,
+  hasDualLanguage,
 }: ModPromptsOptions): Promise<ModPromptResult> => {
   const t = i18next.getFixedT(null, null, 'moddingMenu.modPromptsMenu');
 
@@ -33,48 +33,38 @@ export const modPromptsMenu = async ({
     value: lang,
   }));
 
-  const { mainLanguage, secondaryLanguage, subtitleColor } = <
-    {
-      mainLanguage?: GameSupportedLanguage;
-      secondaryLanguage?: GameSupportedLanguage;
-      subtitleColor?: string;
-    }
-  >await prompt([
-    {
-      choices: gameLanguageOptions,
-      message: t('prompts.selectLanguage.main'),
-      name: 'mainLanguage',
-      type: hasAnyDualSubs || hasCategories ? 'select' : null,
-    },
-    {
-      message: t('prompts.selectLanguage.secondary'),
-      name: 'secondaryLanguage',
-      choices: (prev: GameSupportedLanguage) =>
-        gameLanguageOptions.filter(({ value }) =>
-          prev === GameSupportedLanguage.ENGLISH
-            ? value !== prev
-            : value === GameSupportedLanguage.ENGLISH,
-        ),
-      type: (prev: GameSupportedLanguage) =>
-        hasAnyDualSubs && prev ? 'select' : null,
-    },
-    {
-      initial: false,
-      message: t('prompts.dualSubsAdvanced.hasColor'),
-      name: 'hasColor',
-      type: hasDualSubsAdvanced ? 'confirm' : null,
-    },
-    {
-      initial: DEFAULT_SUBTITLE_COLOR,
-      name: 'subtitleColor',
-      message: t('prompts.dualSubsAdvanced.subtitleColor', {
-        color: DEFAULT_SUBTITLE_COLOR,
-      }),
-      type: (prev: boolean) => (hasDualSubsAdvanced && prev ? 'text' : null),
-      validate: (val: string) =>
-        HEX_COLOR_REGEX.test(val) ? true : t('validations.invalidHexColor'),
-    },
-  ]);
+  const { dialogColor, mainLanguage, secondaryLanguage } = <ModPromptResult>(
+    await prompt([
+      {
+        choices: gameLanguageOptions,
+        message: t('prompts.selectLanguage.main'),
+        name: 'mainLanguage',
+        type: hasDualLanguage || hasCategories ? 'select' : null,
+      },
+      {
+        message: t('prompts.selectLanguage.secondary'),
+        name: 'secondaryLanguage',
+        choices: (prev: GameSupportedLanguage) =>
+          gameLanguageOptions.filter(({ value }) =>
+            prev === GameSupportedLanguage.ENGLISH
+              ? value !== prev
+              : value === GameSupportedLanguage.ENGLISH,
+          ),
+        type: (prev: GameSupportedLanguage) =>
+          hasDualLanguage && prev ? 'select' : null,
+      },
+      {
+        initial: DEFAULT_DIALOG_COLOR,
+        name: 'dialogColor',
+        type: hasDialogColor ? 'text' : null,
+        message: t('prompts.dialogColor', {
+          color: DEFAULT_DIALOG_COLOR,
+        }),
+        validate: (val: string) =>
+          HEX_COLOR_REGEX.test(val) ? true : t('validations.invalidHexColor'),
+      },
+    ])
+  );
 
-  return { mainLanguage, secondaryLanguage, subtitleColor };
+  return { dialogColor, mainLanguage, secondaryLanguage };
 };

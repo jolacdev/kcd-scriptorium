@@ -8,7 +8,7 @@ const MIN_CHARACTERS_TO_BE_DESCRIPTION = 50;
  * @note This function is intended to work with `text_ui_items.xml` translations.
  *
  * Transforms a translation:
- * - Adds dual subtitles only for item descriptions, detected by a minimum character threshold.
+ * - Adds dual-language only for item descriptions, detected by a minimum character threshold.
  * - Prepends item categories only for items to improve in-game sorting, based on character threshold and category availability.
  *
  * @param {ItemTransformerOptions} options - The options for transforming the translation.
@@ -20,7 +20,7 @@ export const transformItemTranslation = ({
   language,
   lastTranslation,
   hasCategories,
-  hasDualSubs,
+  hasDualLanguage,
   isTranslated,
 }: ItemTransformerOptions) => {
   const category = findLocalizedCategoryByItemId(id, language);
@@ -29,9 +29,9 @@ export const transformItemTranslation = ({
     !isItemCategorized &&
     firstTranslation.length >= MIN_CHARACTERS_TO_BE_DESCRIPTION;
 
-  // NOTE: Item descriptions are not categorized. If dual subtitles are enabled and a translation exists, it is appended after two line breaks.
+  // NOTE: Item descriptions are not categorized. If dual-language is enabled and a translation exists, it is appended after two line breaks.
   if (isDescription) {
-    return isTranslated && hasDualSubs
+    return isTranslated && hasDualLanguage
       ? `${firstTranslation}${BR}${BR}${lastTranslation}`
       : firstTranslation;
   }

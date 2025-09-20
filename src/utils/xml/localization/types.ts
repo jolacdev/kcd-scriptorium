@@ -3,7 +3,7 @@ import { GameSupportedLanguage } from '../../../constants/constants.ts';
 export type BaseTransformerOptions = {
   firstTranslation: string;
   lastTranslation: string;
-  hasDualSubs: boolean;
+  hasDualLanguage: boolean;
   isTranslated: boolean;
 };
 

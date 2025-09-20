@@ -6,7 +6,7 @@ import type { DialogTransformerOptions } from './types.ts';
  * @note This function is intended to work with `text_ui_dialog.xml` translations.
  *
  * Transforms a translation:
- * - Adds dual subtitles if `hasDualSubs` is true and a translation exists.
+ * - Adds dual-language if `hasDualLanguage` is true and a translation exists.
  * - Applies a custom color to the secondary translation if `color` is provided.
  *
  * @param {DialogTransformerOptions} options - The options for transforming the translation.
@@ -16,10 +16,10 @@ export const transformDialogTranslation = ({
   color,
   firstTranslation,
   lastTranslation,
-  hasDualSubs,
+  hasDualLanguage,
   isTranslated,
 }: DialogTransformerOptions) => {
-  if (!hasDualSubs || !isTranslated) {
+  if (!hasDualLanguage || !isTranslated) {
     return firstTranslation;
   }
 

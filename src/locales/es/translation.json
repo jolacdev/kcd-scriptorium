@@ -11,8 +11,8 @@
   "moddingMenu": {
     "title": "Modding Toolkit - Selecciona una opción",
     "options": {
-      "dualSubsBasic": "Generar subtítulos dobles (básico)",
-      "dualSubsAdvanced": "Generar subtítulos dobles (avanzado)",
+      "dualLanguage": "Generar contenido bilingüe",
+      "dualLanguageWithColor": "Generar contenido bilingüe con color personalizado para los diálogos",
       "categorizeItems": "Categorizar objetos",
       "removeTimers": "Eliminar temporizadores de respuesta en las conversaciones"
     },
@@ -22,10 +22,7 @@
           "main": "Selecciona el idioma principal",
           "secondary": "Selecciona el idioma secundario"
         },
-        "dualSubsAdvanced": {
-          "hasColor": "¿Añadir un color personalizado al idioma secundario?",
-          "subtitleColor": "Introduce un color hexadecimal válido (ej. {{color}})"
-        }
+        "dialogColor": "Introduce un color hexadecimal válido (ej. {{color}})"
       },
       "validations": {
         "invalidHexColor": "Introduce un color hexadecimal válido"

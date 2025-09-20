@@ -5,7 +5,7 @@ import type { SoulTransformerOptions } from './types.ts';
  * @note This function is intended to work with `text_ui_soul.xml` translations.
  *
  * Transforms a translation:
- * - Adds dual subtitles (for descriptions) if `hasDualSubs` is true and a translation exists.
+ * - Adds dual-language (for descriptions) if `hasDualLanguage` is true and a translation exists.
  *
  * @param {SoulTransformerOptions} options - The options for transforming the translation.
  * @returns {string} The transformed string to be placed in the third cell of the corresponding row.
@@ -14,11 +14,11 @@ export const transformSoulTranslation = ({
   id,
   firstTranslation,
   lastTranslation,
-  hasDualSubs,
+  hasDualLanguage,
   isTranslated,
 }: SoulTransformerOptions) => {
   // TODO: TEMP Comment: blackList = ['ui_fac_', 'stat_']
-  if (!hasDualSubs || !isTranslated) {
+  if (!hasDualLanguage || !isTranslated) {
     return firstTranslation;
   }
 

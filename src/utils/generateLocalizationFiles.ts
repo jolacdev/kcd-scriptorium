@@ -47,18 +47,18 @@ type TransformLocalizationXmlContentOptions = {
   content: string;
   language: GameSupportedLanguage;
   transformerFn: TransformerFn;
-  subtitleColor?: string;
+  dialogColor?: string;
   hasCategories: boolean;
-  hasDualSubs: boolean;
+  hasDualLanguage: boolean;
 };
 
 const transformLocalizationXmlContent = ({
   content,
+  dialogColor,
   language,
-  subtitleColor,
   transformerFn,
   hasCategories,
-  hasDualSubs,
+  hasDualLanguage,
 }: TransformLocalizationXmlContentOptions) =>
   content.replace(XML_ROW_CELL_GLOBAL_REGEX, (_, id, english, translation) => {
     const isTranslated = english !== translation;
@@ -71,12 +71,12 @@ const transformLocalizationXmlContent = ({
 
     const transformedTranslation = transformerFn({
       id,
-      color: subtitleColor ?? '',
+      color: dialogColor ?? '',
       firstTranslation,
       language,
       lastTranslation,
       hasCategories,
-      hasDualSubs,
+      hasDualLanguage,
       isTranslated,
     });
 
@@ -86,17 +86,17 @@ const transformLocalizationXmlContent = ({
 type GenerateLocalizationFilesOptions = {
   inputPak: PakFilePath;
   mainLanguage: GameSupportedLanguage;
-  subtitleColor?: string;
+  dialogColor?: string;
   hasCategories: boolean;
-  hasDualSubs: boolean;
+  hasDualLanguage: boolean;
 };
 
 export const generateLocalizationFiles = async ({
+  dialogColor,
   inputPak,
   mainLanguage: language,
-  subtitleColor,
   hasCategories,
-  hasDualSubs,
+  hasDualLanguage,
 }: GenerateLocalizationFilesOptions) => {
   for (const file of SUPPORTED_LOCALIZATION_FILES) {
     let xml;
@@ -118,11 +118,11 @@ export const generateLocalizationFiles = async ({
 
     const transformedXml = transformLocalizationXmlContent({
       content: xml,
+      dialogColor,
       language,
-      subtitleColor,
       transformerFn,
       hasCategories,
-      hasDualSubs,
+      hasDualLanguage,
     });
 
     const pakPath = path.join(process.cwd(), Folder.Mod, Folder.Localization);

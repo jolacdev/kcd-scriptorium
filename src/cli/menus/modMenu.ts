@@ -8,8 +8,8 @@ import { modPromptsMenu } from './modMenu/modPromptsMenu.ts';
 
 enum OptionKey {
   CATEGORIZE_ITEMS = 'categorizeItems',
-  DUAL_SUBS_ADVANCED = 'dualSubsAdvanced',
-  DUAL_SUBS_BASIC = 'dualSubsBasic',
+  DUAL_LANGUAGE = 'dualLanguage',
+  DUAL_LANGUAGE_WITH_COLOR = 'dualLanguageWithColor',
   REMOVE_TIMERS = 'removeTimers',
 }
 
@@ -18,10 +18,10 @@ export const modMenu = async () => {
   const t = i18next.getFixedT(null, null, 'moddingMenu');
 
   const modOptions: { title: string; value: OptionKey }[] = [
-    { title: t('options.dualSubsBasic'), value: OptionKey.DUAL_SUBS_BASIC },
+    { title: t('options.dualLanguage'), value: OptionKey.DUAL_LANGUAGE },
     {
-      title: t('options.dualSubsAdvanced'),
-      value: OptionKey.DUAL_SUBS_ADVANCED,
+      title: t('options.dualLanguageWithColor'),
+      value: OptionKey.DUAL_LANGUAGE_WITH_COLOR,
     },
     { title: t('options.categorizeItems'), value: OptionKey.CATEGORIZE_ITEMS },
     {
@@ -42,18 +42,19 @@ export const modMenu = async () => {
     return;
   }
 
-  const hasDualSubsBasic = selectedOptions.includes(OptionKey.DUAL_SUBS_BASIC);
-  const hasDualSubsAdvanced = selectedOptions.includes(
-    OptionKey.DUAL_SUBS_ADVANCED,
+  const hasDualLanguage = selectedOptions.includes(OptionKey.DUAL_LANGUAGE);
+  const hasDualLanguageWithColor = selectedOptions.includes(
+    OptionKey.DUAL_LANGUAGE_WITH_COLOR,
   );
   const hasCategories = selectedOptions.includes(OptionKey.CATEGORIZE_ITEMS);
 
-  const { mainLanguage, secondaryLanguage, subtitleColor } =
-    await modPromptsMenu({
-      hasAnyDualSubs: hasDualSubsBasic || hasDualSubsAdvanced,
+  const { dialogColor, mainLanguage, secondaryLanguage } = await modPromptsMenu(
+    {
       hasCategories,
-      hasDualSubsAdvanced,
-    });
+      hasDialogColor: hasDualLanguageWithColor,
+      hasDualLanguage: hasDualLanguage || hasDualLanguageWithColor,
+    },
+  );
 
   if (!mainLanguage) {
     return;
@@ -71,10 +72,10 @@ export const modMenu = async () => {
   }
 
   generateLocalizationFiles({
+    dialogColor,
     inputPak,
     mainLanguage,
-    subtitleColor,
     hasCategories,
-    hasDualSubs: Boolean(mainLanguage && secondaryLanguage),
+    hasDualLanguage: Boolean(mainLanguage && secondaryLanguage),
   });
 };
