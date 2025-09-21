@@ -1,8 +1,9 @@
 import i18next from 'i18next';
 
+import { GameSupportedLanguage } from '../../constants/constants.ts';
 import { processUserOptions } from '../../utils/processUserOptions.ts';
 import { prompt } from '../prompt.ts';
-import { modPromptsMenu } from './modMenu/modPromptsMenu.ts';
+import { localizationPromptsMenu } from './localizationPromptsMenu/localizationPromptsMenu.ts';
 
 enum OptionKey {
   CATEGORIZE_ITEMS = 'categorizeItems',
@@ -39,15 +40,29 @@ export const modMenu = async () => {
 
   const isSelected = (key: OptionKey) => selectedOptions.includes(key);
 
-  const { dialogColor, mainLanguage, secondaryLanguage } = await modPromptsMenu(
-    {
+  const shouldShowLocalizationPromptsMenu =
+    isSelected(OptionKey.DUAL_LANGUAGE) ||
+    isSelected(OptionKey.DUAL_LANGUAGE_WITH_COLOR) ||
+    isSelected(OptionKey.CATEGORIZE_ITEMS);
+
+  let dialogColor: string | undefined;
+  let mainLanguage: GameSupportedLanguage | undefined;
+  let secondaryLanguage: GameSupportedLanguage | undefined;
+
+  if (shouldShowLocalizationPromptsMenu) {
+    const result = await localizationPromptsMenu({
       hasColorOption: isSelected(OptionKey.DUAL_LANGUAGE_WITH_COLOR),
       hasSecondaryLanguageOption:
         isSelected(OptionKey.DUAL_LANGUAGE) ||
         isSelected(OptionKey.DUAL_LANGUAGE_WITH_COLOR),
-    },
-  );
+    });
 
+    dialogColor = result.dialogColor;
+    mainLanguage = result.mainLanguage;
+    secondaryLanguage = result.secondaryLanguage;
+  }
+
+  // TODO: Don't call if user has exited (Ctrl + C) modMenu / localizationPromptsMenu
   processUserOptions({
     localization: {
       dialogColor,

@@ -34,7 +34,7 @@
       "categorizeItems": "Categorizar objetos",
       "removeTimers": "Eliminar temporizadores de respuesta en las conversaciones"
     },
-    "modPromptsMenu": {
+    "localizationPromptsMenu": {
       "prompts": {
         "selectLanguage": {
           "main": "Selecciona el idioma principal",

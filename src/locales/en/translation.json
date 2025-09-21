@@ -34,7 +34,7 @@
       "categorizeItems": "Categorize items",
       "removeTimers": "Remove conversation response timers"
     },
-    "modPromptsMenu": {
+    "localizationPromptsMenu": {
       "prompts": {
         "selectLanguage": {
           "main": "Select main language",
