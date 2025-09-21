@@ -101,12 +101,12 @@ export const generateLocalizationFiles = async ({
   hasCategories,
   hasDualLanguage,
 }: GenerateLocalizationFilesOptions) => {
+  const temporaryXmlFilePaths = [];
   const localizationDirPath = path.join(
     process.cwd(),
     Folder.Mod,
     Folder.Localization,
   );
-  const xmlsToPak = [];
 
   const inputPak = getCorrespondingLocalizationPakPath(
     AppState.getInstance().gamePath!,
@@ -115,25 +115,28 @@ export const generateLocalizationFiles = async ({
   );
 
   if (!inputPak) {
-    // TODO: Handle
-    return;
+    throw new Error('No localization input PAK file found.');
   }
 
   for (const file of SUPPORTED_LOCALIZATION_FILES) {
+    const transformerFn = fileTransformers[file];
+    if (!transformerFn) {
+      continue;
+    }
+
     let xml;
     try {
       xml = await readXmlFromPak(inputPak, file);
+      if (!xml) {
+        continue;
+      }
     } catch (error) {
-      console.log(error instanceof Error ? error.message : error);
+      console.error(error instanceof Error ? error.message : error);
       continue;
     }
 
-    if (!xml) {
-      continue;
-    }
-
-    const transformerFn = fileTransformers[file];
-    if (!transformerFn) {
+    const outputXml = path.join(localizationDirPath, file);
+    if (!isXmlFile(outputXml)) {
       continue;
     }
 
@@ -145,13 +148,8 @@ export const generateLocalizationFiles = async ({
       hasCategories,
       hasDualLanguage,
     });
-
-    const xmlOutputPath = path.join(localizationDirPath, file);
-
-    if (isXmlFile(xmlOutputPath)) {
-      writeXml(xmlOutputPath, transformedXml);
-      xmlsToPak.push(xmlOutputPath);
-    }
+    writeXml(outputXml, transformedXml);
+    temporaryXmlFilePaths.push(outputXml);
   }
 
   const outputPak = path.join(
@@ -160,11 +158,11 @@ export const generateLocalizationFiles = async ({
   );
 
   if (isPakFile(outputPak)) {
-    const xmlInputFiles = xmlsToPak.map((xmlFile) => ({
+    const xmlInputFiles = temporaryXmlFilePaths.map((xmlFile) => ({
       filePath: xmlFile,
     }));
 
     await writePak(outputPak, xmlInputFiles);
-    xmlsToPak.forEach((file) => fs.unlinkSync(file));
+    temporaryXmlFilePaths.forEach((file) => fs.unlinkSync(file));
   }
 };

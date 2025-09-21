@@ -4,11 +4,8 @@ import type { Choice } from 'prompts';
 import { GameSupportedLanguage } from '../../../constants/constants.ts';
 import { prompt } from '../../prompt.ts';
 
-type ModPromptsOptions = {
-  hasSelectedCategories: boolean;
-  hasSelectedDualLanguage: boolean;
-  hasSelectedDualLanguageWithColor: boolean;
-};
+const DEFAULT_DIALOG_COLOR = '#F7E095';
+const HEX_COLOR_REGEX = /^#([0-9A-Fa-f]{6})$/;
 
 type ModPromptResult = {
   dialogColor?: string;
@@ -16,13 +13,14 @@ type ModPromptResult = {
   secondaryLanguage?: GameSupportedLanguage;
 };
 
-const DEFAULT_DIALOG_COLOR = '#F7E095';
-const HEX_COLOR_REGEX = /^#([0-9A-Fa-f]{6})$/;
+type ModPromptsOptions = {
+  hasColorOption: boolean;
+  hasSecondaryLanguageOption: boolean;
+};
 
 export const modPromptsMenu = async ({
-  hasSelectedCategories,
-  hasSelectedDualLanguage,
-  hasSelectedDualLanguageWithColor,
+  hasColorOption,
+  hasSecondaryLanguageOption,
 }: ModPromptsOptions): Promise<ModPromptResult> => {
   const t = i18next.getFixedT(null, null, 'moddingMenu.modPromptsMenu');
 
@@ -39,8 +37,7 @@ export const modPromptsMenu = async ({
         choices: gameLanguageOptions,
         message: t('prompts.selectLanguage.main'),
         name: 'mainLanguage',
-        type:
-          hasSelectedDualLanguage || hasSelectedCategories ? 'select' : null,
+        type: 'select',
       },
       {
         message: t('prompts.selectLanguage.secondary'),
@@ -52,12 +49,12 @@ export const modPromptsMenu = async ({
               : value === GameSupportedLanguage.ENGLISH,
           ),
         type: (prev: GameSupportedLanguage) =>
-          hasSelectedDualLanguage && prev ? 'select' : null,
+          hasSecondaryLanguageOption && prev ? 'select' : null,
       },
       {
         initial: DEFAULT_DIALOG_COLOR,
         name: 'dialogColor',
-        type: hasSelectedDualLanguageWithColor ? 'text' : null,
+        type: hasColorOption ? 'text' : null,
         message: t('prompts.dialogColor', {
           color: DEFAULT_DIALOG_COLOR,
         }),
