@@ -5,9 +5,9 @@ import { GameSupportedLanguage } from '../../../constants/constants.ts';
 import { prompt } from '../../prompt.ts';
 
 type ModPromptsOptions = {
-  hasCategories: boolean;
-  hasDialogColor: boolean;
-  hasDualLanguage: boolean;
+  hasSelectedCategories: boolean;
+  hasSelectedDualLanguage: boolean;
+  hasSelectedDualLanguageWithColor: boolean;
 };
 
 type ModPromptResult = {
@@ -20,16 +20,16 @@ const DEFAULT_DIALOG_COLOR = '#F7E095';
 const HEX_COLOR_REGEX = /^#([0-9A-Fa-f]{6})$/;
 
 export const modPromptsMenu = async ({
-  hasCategories,
-  hasDialogColor,
-  hasDualLanguage,
+  hasSelectedCategories,
+  hasSelectedDualLanguage,
+  hasSelectedDualLanguageWithColor,
 }: ModPromptsOptions): Promise<ModPromptResult> => {
   const t = i18next.getFixedT(null, null, 'moddingMenu.modPromptsMenu');
 
   const gameLanguageOptions: Choice[] = Object.values(
     GameSupportedLanguage,
   ).map((lang) => ({
-    title: t(`gameSupportedLanguages.${lang}`),
+    title: i18next.t(`common.gameSupportedLanguages.${lang}`),
     value: lang,
   }));
 
@@ -39,7 +39,8 @@ export const modPromptsMenu = async ({
         choices: gameLanguageOptions,
         message: t('prompts.selectLanguage.main'),
         name: 'mainLanguage',
-        type: hasDualLanguage || hasCategories ? 'select' : null,
+        type:
+          hasSelectedDualLanguage || hasSelectedCategories ? 'select' : null,
       },
       {
         message: t('prompts.selectLanguage.secondary'),
@@ -51,12 +52,12 @@ export const modPromptsMenu = async ({
               : value === GameSupportedLanguage.ENGLISH,
           ),
         type: (prev: GameSupportedLanguage) =>
-          hasDualLanguage && prev ? 'select' : null,
+          hasSelectedDualLanguage && prev ? 'select' : null,
       },
       {
         initial: DEFAULT_DIALOG_COLOR,
         name: 'dialogColor',
-        type: hasDialogColor ? 'text' : null,
+        type: hasSelectedDualLanguageWithColor ? 'text' : null,
         message: t('prompts.dialogColor', {
           color: DEFAULT_DIALOG_COLOR,
         }),

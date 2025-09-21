@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
+import { AppState } from '../AppState.ts';
 import {
   Folder,
   GameSupportedLanguage,
@@ -8,6 +9,7 @@ import {
   localizationPakMap,
   SUPPORTED_LOCALIZATION_FILES,
 } from '../constants/constants.ts';
+import { getCorrespondingLocalizationPakPath } from './getCorrespondingLocalizationPakPath.ts';
 import { isPakFile, readXmlFromPak, writePak } from './pakUtils.ts';
 import { isXmlFile, writeXml } from './xml/fileUtils.ts';
 import { transformDialogTranslation } from './xml/localization/transformDialogTranslation.ts';
@@ -17,7 +19,6 @@ import { transformItemTranslation } from './xml/localization/transformItemTransl
 import { transformMenuTranslation } from './xml/localization/transformMenuTranslation.ts';
 import { transformQuestTranslation } from './xml/localization/transformQuestTranslation.ts';
 import { transformSoulTranslation } from './xml/localization/transformSoulTranslation.ts';
-import type { PakFile } from './pakUtils.ts';
 import type {
   BaseTransformerOptions,
   ExtendedTransformerOptions,
@@ -86,17 +87,17 @@ const transformLocalizationXmlContent = ({
   });
 
 type GenerateLocalizationFilesOptions = {
-  inputPak: PakFile;
   mainLanguage: GameSupportedLanguage;
   dialogColor?: string;
+  secondaryLanguage?: GameSupportedLanguage;
   hasCategories: boolean;
   hasDualLanguage: boolean;
 };
 
 export const generateLocalizationFiles = async ({
   dialogColor,
-  inputPak,
   mainLanguage: language,
+  secondaryLanguage,
   hasCategories,
   hasDualLanguage,
 }: GenerateLocalizationFilesOptions) => {
@@ -106,6 +107,17 @@ export const generateLocalizationFiles = async ({
     Folder.Localization,
   );
   const xmlsToPak = [];
+
+  const inputPak = getCorrespondingLocalizationPakPath(
+    AppState.getInstance().gamePath!,
+    language,
+    secondaryLanguage,
+  );
+
+  if (!inputPak) {
+    // TODO: Handle
+    return;
+  }
 
   for (const file of SUPPORTED_LOCALIZATION_FILES) {
     let xml;

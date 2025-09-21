@@ -2,7 +2,7 @@ import i18next from 'i18next';
 
 import { AppState } from '../../AppState.ts';
 import { generateLocalizationFiles } from '../../utils/generateLocalizationFiles.ts';
-import { getCorrespondingLocalizationPakPath } from '../../utils/getCorrespondingLocalizationPakPath.ts';
+import { removeModFolder } from '../../utils/xml/fileUtils.ts';
 import { prompt } from '../prompt.ts';
 import { modPromptsMenu } from './modMenu/modPromptsMenu.ts';
 
@@ -42,40 +42,35 @@ export const modMenu = async () => {
     return;
   }
 
-  const hasDualLanguage = selectedOptions.includes(OptionKey.DUAL_LANGUAGE);
-  const hasDualLanguageWithColor = selectedOptions.includes(
+  const hasSelectedDualLanguage = selectedOptions.includes(
+    OptionKey.DUAL_LANGUAGE,
+  );
+  const hasSelectedDualLanguageWithColor = selectedOptions.includes(
     OptionKey.DUAL_LANGUAGE_WITH_COLOR,
   );
-  const hasCategories = selectedOptions.includes(OptionKey.CATEGORIZE_ITEMS);
+  const hasSelectedCategories = selectedOptions.includes(
+    OptionKey.CATEGORIZE_ITEMS,
+  );
 
   const { dialogColor, mainLanguage, secondaryLanguage } = await modPromptsMenu(
     {
-      hasCategories,
-      hasDialogColor: hasDualLanguageWithColor,
-      hasDualLanguage: hasDualLanguage || hasDualLanguageWithColor,
+      hasSelectedCategories,
+      hasSelectedDualLanguage:
+        hasSelectedDualLanguage || hasSelectedDualLanguageWithColor,
+      hasSelectedDualLanguageWithColor,
     },
   );
 
-  if (!mainLanguage) {
-    return;
+  removeModFolder();
+
+  const hasDualLanguage = Boolean(mainLanguage && secondaryLanguage);
+  if (mainLanguage && (hasDualLanguage || hasSelectedCategories)) {
+    generateLocalizationFiles({
+      dialogColor,
+      mainLanguage,
+      secondaryLanguage,
+      hasCategories: hasSelectedCategories,
+      hasDualLanguage,
+    });
   }
-
-  const inputPak = getCorrespondingLocalizationPakPath(
-    appState.gamePath!,
-    mainLanguage,
-    secondaryLanguage,
-  );
-
-  if (!inputPak) {
-    // TODO: Handle
-    return;
-  }
-
-  generateLocalizationFiles({
-    dialogColor,
-    inputPak,
-    mainLanguage,
-    hasCategories,
-    hasDualLanguage: Boolean(mainLanguage && secondaryLanguage),
-  });
 };

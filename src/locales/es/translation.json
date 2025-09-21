@@ -1,5 +1,23 @@
 {
   "appTitle": "KCD - Kit de Herramientas para Localización (CLI)",
+  "common": {
+    "gameSupportedLanguages": {
+      "zh": "Chino",
+      "cs": "Checo",
+      "en": "Inglés",
+      "fr": "Francés",
+      "de": "Alemán",
+      "it": "Italiano",
+      "ja": "Japonés",
+      "ko": "Coreano",
+      "pl": "Polaco",
+      "pt": "Portugués",
+      "ru": "Ruso",
+      "es": "Español",
+      "tr": "Turco",
+      "uk": "Ucraniano"
+    }
+  },
   "mainMenu": {
     "options": {
       "moddingToolkit": "Kit de Herramientas de Modding",
@@ -26,22 +44,6 @@
       },
       "validations": {
         "invalidHexColor": "Introduce un color hexadecimal válido"
-      },
-      "gameSupportedLanguages": {
-        "zh": "Chino",
-        "cs": "Checo",
-        "en": "Inglés",
-        "fr": "Francés",
-        "de": "Alemán",
-        "it": "Italiano",
-        "ja": "Japonés",
-        "ko": "Coreano",
-        "pl": "Polaco",
-        "pt": "Portugués",
-        "ru": "Ruso",
-        "es": "Español",
-        "tr": "Turco",
-        "uk": "Ucraniano"
       }
     }
   },

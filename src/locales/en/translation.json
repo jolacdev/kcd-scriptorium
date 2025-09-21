@@ -1,5 +1,23 @@
 {
   "appTitle": "KCD - Localization Toolkit (CLI)",
+  "common": {
+    "gameSupportedLanguages": {
+      "zh": "Chinese",
+      "cs": "Czech",
+      "en": "English",
+      "fr": "French",
+      "de": "German",
+      "it": "Italian",
+      "ja": "Japanese",
+      "ko": "Korean",
+      "pl": "Polish",
+      "pt": "Portuguese",
+      "ru": "Russian",
+      "es": "Spanish",
+      "tr": "Turkish",
+      "uk": "Ukrainian"
+    }
+  },
   "mainMenu": {
     "options": {
       "moddingToolkit": "Modding Toolkit",
@@ -26,22 +44,6 @@
       },
       "validations": {
         "invalidHexColor": "Enter a valid hex color"
-      },
-      "gameSupportedLanguages": {
-        "zh": "Chinese",
-        "cs": "Czech",
-        "en": "English",
-        "fr": "French",
-        "de": "German",
-        "it": "Italian",
-        "ja": "Japanese",
-        "ko": "Korean",
-        "pl": "Polish",
-        "pt": "Portuguese",
-        "ru": "Russian",
-        "es": "Spanish",
-        "tr": "Turkish",
-        "uk": "Ukrainian"
       }
     }
   },
