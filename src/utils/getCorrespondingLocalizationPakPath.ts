@@ -5,7 +5,7 @@ import {
   GameSupportedLanguage,
   localizationPakMap,
 } from '../constants/constants.ts';
-import { isPakFile, type PakFilePath } from './pakUtils.ts';
+import { isPakFile, type PakFile } from './pakUtils.ts';
 
 /**
  * Returns the full path to the localization PAK file for a given language selection.
@@ -23,7 +23,7 @@ export const getCorrespondingLocalizationPakPath = (
   gamePath: string,
   mainLanguage: GameSupportedLanguage,
   secondaryLanguage?: GameSupportedLanguage,
-): PakFilePath | undefined => {
+): PakFile | undefined => {
   const pakLanguage =
     secondaryLanguage && secondaryLanguage !== GameSupportedLanguage.ENGLISH
       ? secondaryLanguage

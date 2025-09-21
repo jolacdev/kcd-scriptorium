@@ -1,12 +1,14 @@
+import fs from 'fs';
 import path from 'path';
 
 import {
   Folder,
   GameSupportedLanguage,
   LocalizationFile,
+  localizationPakMap,
   SUPPORTED_LOCALIZATION_FILES,
 } from '../constants/constants.ts';
-import { readXmlFromPak } from './pakUtils.ts';
+import { isPakFile, readXmlFromPak, writePak } from './pakUtils.ts';
 import { isXmlFile, writeXml } from './xml/fileUtils.ts';
 import { transformDialogTranslation } from './xml/localization/transformDialogTranslation.ts';
 import { transformHUDTranslation } from './xml/localization/transformHUDTranslation.ts';
@@ -15,7 +17,7 @@ import { transformItemTranslation } from './xml/localization/transformItemTransl
 import { transformMenuTranslation } from './xml/localization/transformMenuTranslation.ts';
 import { transformQuestTranslation } from './xml/localization/transformQuestTranslation.ts';
 import { transformSoulTranslation } from './xml/localization/transformSoulTranslation.ts';
-import type { PakFilePath } from './pakUtils.ts';
+import type { PakFile } from './pakUtils.ts';
 import type {
   BaseTransformerOptions,
   ExtendedTransformerOptions,
@@ -84,7 +86,7 @@ const transformLocalizationXmlContent = ({
   });
 
 type GenerateLocalizationFilesOptions = {
-  inputPak: PakFilePath;
+  inputPak: PakFile;
   mainLanguage: GameSupportedLanguage;
   dialogColor?: string;
   hasCategories: boolean;
@@ -98,6 +100,13 @@ export const generateLocalizationFiles = async ({
   hasCategories,
   hasDualLanguage,
 }: GenerateLocalizationFilesOptions) => {
+  const localizationDirPath = path.join(
+    process.cwd(),
+    Folder.Mod,
+    Folder.Localization,
+  );
+  const xmlsToPak = [];
+
   for (const file of SUPPORTED_LOCALIZATION_FILES) {
     let xml;
     try {
@@ -125,12 +134,25 @@ export const generateLocalizationFiles = async ({
       hasDualLanguage,
     });
 
-    const pakPath = path.join(process.cwd(), Folder.Mod, Folder.Localization);
-    const xmlOutputPath = path.join(pakPath, file);
-    if (!isXmlFile(xmlOutputPath)) {
-      continue;
-    }
+    const xmlOutputPath = path.join(localizationDirPath, file);
 
-    writeXml(xmlOutputPath, transformedXml);
+    if (isXmlFile(xmlOutputPath)) {
+      writeXml(xmlOutputPath, transformedXml);
+      xmlsToPak.push(xmlOutputPath);
+    }
+  }
+
+  const outputPak = path.join(
+    localizationDirPath,
+    localizationPakMap[language],
+  );
+
+  if (isPakFile(outputPak)) {
+    const xmlInputFiles = xmlsToPak.map((xmlFile) => ({
+      filePath: xmlFile,
+    }));
+
+    await writePak(outputPak, xmlInputFiles);
+    xmlsToPak.forEach((file) => fs.unlinkSync(file));
   }
 };

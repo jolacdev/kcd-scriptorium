@@ -5,7 +5,7 @@ import yazl from 'yazl';
 
 import { LocalizationFile } from '../constants/constants.ts';
 
-export type PakFilePath = `${string}.pak`;
+export type PakFile = `${string}.pak`;
 
 // TODO: Add error messages to i18n.
 
@@ -93,7 +93,7 @@ const readFileFromZip = (zipPath: string, fileName: string): Promise<string> =>
 /**
  * Reads a specific XML localization file from a PAK archive.
  *
- * @param {PakFilePath} pakPath - Path to the PAK archive.
+ * @param {PakFile} pakPath - Path to the PAK archive.
  * @param {LocalizationFile} xmlFileName - The XML file to read.
  * @returns {Promise<string>} Resolves with the file’s contents as UTF-8 text.
  *
@@ -103,7 +103,7 @@ const readFileFromZip = (zipPath: string, fileName: string): Promise<string> =>
  *   - An error occurs while reading the entry stream.
  */
 export const readXmlFromPak = (
-  pakPath: PakFilePath,
+  pakPath: PakFile,
   xmlFileName: LocalizationFile,
 ): Promise<string> => readFileFromZip(pakPath, xmlFileName);
 
@@ -113,7 +113,7 @@ export const readXmlFromPak = (
  * Each file in `inputFiles` will be added to the archive, optionally under a
  * specified root path inside the zip.
  *
- * @param {PakFilePath} pakPath - The output path where the .pak file will be written.
+ * @param {PakFile} pakPath - The output path where the .pak file will be written.
  * @param {Array<{ filePath: string; zipRoot?: string }>} inputFiles - An array of objects describing
  *        the files to include in the archive.
  *        - `filePath` (string): The path to the file to include.
@@ -134,7 +134,7 @@ export const readXmlFromPak = (
  * //    └─ file2.xml
  */
 export const writePak = async (
-  pakPath: PakFilePath,
+  pakPath: PakFile,
   inputFiles: {
     filePath: string;
     zipRoot?: string;
@@ -168,5 +168,5 @@ export const writePak = async (
  * @param filePath - Path to check.
  * @returns True if the path is an PAK file.
  */
-export const isPakFile = (filePath: string): filePath is PakFilePath =>
+export const isPakFile = (filePath: string): filePath is PakFile =>
   /\.pak$/i.test(filePath);
