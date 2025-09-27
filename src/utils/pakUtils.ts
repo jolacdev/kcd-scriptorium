@@ -3,11 +3,19 @@ import path from 'path';
 import yauzl, { Entry } from 'yauzl';
 import yazl from 'yazl';
 
-import { LocalizationFile } from '../constants/constants.ts';
-
 export type PakFile = `${string}.pak`;
 
 // TODO: Add error messages to i18n.
+
+/**
+ * Checks if the given file path ends with `.pak`.
+ *
+ * Acts as a type guard, narrowing the type to `PakFilePath`.
+ * @param filePath - Path to check.
+ * @returns True if the path is an PAK file.
+ */
+const isPakFile = (filePath: string): filePath is PakFile =>
+  /\.pak$/i.test(filePath);
 
 /**
  * Reads the content of a single ZIP entry as UTF-8 text.
@@ -94,7 +102,7 @@ const readFileFromZip = (zipPath: string, fileName: string): Promise<string> =>
  * Reads a specific XML localization file from a PAK archive.
  *
  * @param {PakFile} pakPath - Path to the PAK archive.
- * @param {LocalizationFile} xmlFileName - The XML file to read.
+ * @param {string} file - Path to the XML file inside the archive.
  * @returns {Promise<string>} Resolves with the file’s contents as UTF-8 text.
  *
  * @throws Will reject if:
@@ -103,9 +111,15 @@ const readFileFromZip = (zipPath: string, fileName: string): Promise<string> =>
  *   - An error occurs while reading the entry stream.
  */
 export const readXmlFromPak = (
-  pakPath: PakFile,
-  xmlFileName: LocalizationFile,
-): Promise<string> => readFileFromZip(pakPath, xmlFileName);
+  pakPath: string,
+  file: string,
+): Promise<string> => {
+  if (!isPakFile(pakPath)) {
+    throw new Error(`❌ Not valid PAK file: "${pakPath}"`);
+  }
+
+  return readFileFromZip(pakPath, file);
+};
 
 /**
  * Creates a `.pak` archive (`.zip` file) at the specified path containing the given input files.
@@ -134,13 +148,17 @@ export const readXmlFromPak = (
  * //    └─ file2.xml
  */
 export const writePak = async (
-  pakPath: PakFile,
+  pakPath: string,
   inputFiles: {
     filePath: string;
     zipRoot?: string;
   }[],
 ): Promise<void> =>
   new Promise((resolve, reject) => {
+    if (!isPakFile(pakPath)) {
+      throw new Error(`❌ Not valid PAK file: "${pakPath}"`);
+    }
+
     const zipfile = new yazl.ZipFile();
 
     for (const { filePath, zipRoot = '' } of inputFiles) {
@@ -160,13 +178,3 @@ export const writePak = async (
 
     zipfile.end();
   });
-
-/**
- * Checks if the given file path ends with `.pak`.
- *
- * Acts as a type guard, narrowing the type to `PakFilePath`.
- * @param filePath - Path to check.
- * @returns True if the path is an PAK file.
- */
-export const isPakFile = (filePath: string): filePath is PakFile =>
-  /\.pak$/i.test(filePath);

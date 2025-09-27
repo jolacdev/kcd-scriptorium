@@ -1,5 +1,6 @@
 import { GameSupportedLanguage } from '../constants/constants.ts';
 import { generateLocalizationFiles } from './generateLocalizationFiles.ts';
+import { generateTimersFile } from './generateTimersFile.ts';
 import { removeModFolder } from './xml/fileUtils.ts';
 
 type UserOptions = {
@@ -21,7 +22,7 @@ export const processUserOptions = async ({
   removeModFolder();
 
   if (hasRemoveTimers) {
-    // TODO: Remove timers.
+    await generateTimersFile();
   }
 
   const hasDualLanguage = Boolean(mainLanguage && secondaryLanguage);

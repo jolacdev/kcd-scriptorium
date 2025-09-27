@@ -5,6 +5,16 @@ import { ModFolder } from '../../constants/constants.ts';
 
 type XmlFilePath = `${string}.xml`;
 
+/**
+ * Checks if the given file path ends with `.xml`.
+ *
+ * Acts as a type guard, narrowing the type to `XmlFilePath`.
+ * @param filePath - Path to check.
+ * @returns True if the path is an XML file.
+ */
+const isXmlFile = (filePath: string): filePath is XmlFilePath =>
+  /\.xml$/i.test(filePath);
+
 const readFileSync = (filePath: string): string | undefined => {
   if (!fs.existsSync(filePath)) {
     return;
@@ -26,18 +36,10 @@ const writeFileWithDirsSync = (filePath: string, content: string) => {
 export const readXml = (xmlFilePath: XmlFilePath) => readFileSync(xmlFilePath);
 
 /**
- * Writes content to an XML file, creating missing directories if necessary.
- * @param xmlFilePath - Absolute path to the XML file.
- * @param content - Content to write.
- */
-export const writeXml = (xmlFilePath: XmlFilePath, content: string) =>
-  writeFileWithDirsSync(xmlFilePath, content);
-
-/**
  * Creates an empty .tbl file next to the given XML file.
  * @param xmlFilePath - Absolute path to the XML file.
  */
-export const writeEmptyTbl = (xmlFilePath: XmlFilePath) => {
+const writeEmptyTbl = (xmlFilePath: XmlFilePath) => {
   const fileExtension = path.extname(xmlFilePath);
   const fileBaseName = path.basename(xmlFilePath, fileExtension);
   const tblFilePath = path.join(
@@ -49,14 +51,24 @@ export const writeEmptyTbl = (xmlFilePath: XmlFilePath) => {
 };
 
 /**
- * Checks if the given file path ends with `.xml`.
- *
- * Acts as a type guard, narrowing the type to `XmlFilePath`.
- * @param filePath - Path to check.
- * @returns True if the path is an XML file.
+ * Writes content to an XML file, creating missing directories if necessary.
+ * @param xmlFilePath - Absolute path to the XML file.
+ * @param content - Content to write.
  */
-export const isXmlFile = (filePath: string): filePath is XmlFilePath =>
-  /\.xml$/i.test(filePath);
+export const writeXml = (
+  xmlFilePath: string,
+  content: string,
+  shouldWriteEmptyTbl: boolean = false,
+) => {
+  if (!isXmlFile(xmlFilePath)) {
+    throw new Error(`❌ Not valid XML file: "${xmlFilePath}"`);
+  }
+
+  writeFileWithDirsSync(xmlFilePath, content);
+  if (shouldWriteEmptyTbl) {
+    writeEmptyTbl(xmlFilePath);
+  }
+};
 
 /**
  * Removes the entire mod folder and all its contents from the current working directory.
