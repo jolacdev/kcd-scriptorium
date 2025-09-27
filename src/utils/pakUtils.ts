@@ -74,7 +74,8 @@ const readFileFromZip = (zipPath: string, fileName: string): Promise<string> =>
       zipFile.readEntry();
 
       zipFile.on('entry', async (entry: Entry) => {
-        isTargetFile = entry.fileName === fileName;
+        isTargetFile =
+          path.normalize(entry.fileName) === path.normalize(fileName);
 
         if (isTargetFile) {
           try {
