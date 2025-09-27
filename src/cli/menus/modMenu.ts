@@ -1,77 +1,142 @@
 import i18next from 'i18next';
+import type { Choice } from 'prompts';
 
 import { GameSupportedLanguage } from '../../constants/constants.ts';
 import { processUserOptions } from '../../utils/processUserOptions.ts';
 import { prompt } from '../prompt.ts';
-import { localizationPromptsMenu } from './localizationPromptsMenu/localizationPromptsMenu.ts';
 
 enum OptionKey {
   CATEGORIZE_ITEMS = 'categorizeItems',
   DUAL_LANGUAGE = 'dualLanguage',
-  DUAL_LANGUAGE_WITH_COLOR = 'dualLanguageWithColor',
   REMOVE_TIMERS = 'removeTimers',
 }
 
-export const modMenu = async () => {
-  const t = i18next.getFixedT(null, null, 'moddingMenu');
+const DEFAULT_DIALOG_COLOR = '#F7E095';
+const HEX_COLOR_REGEX = /^#([0-9A-Fa-f]{6})$/;
 
-  const modOptions: { title: string; value: OptionKey }[] = [
-    { title: t('options.dualLanguage'), value: OptionKey.DUAL_LANGUAGE },
+export const modMenu = async () => {
+  const t = i18next.getFixedT(null, null, 'modMenu');
+
+  const gameLanguageOptions: Choice[] = Object.values(
+    GameSupportedLanguage,
+  ).map((lang) => ({
+    title: i18next.t(`common.gameSupportedLanguages.${lang}`),
+    value: lang,
+  }));
+
+  const choices: { title: string; value: OptionKey }[] = [
     {
-      title: t('options.dualLanguageWithColor'),
-      value: OptionKey.DUAL_LANGUAGE_WITH_COLOR,
+      title: t('options.mainFlags.dualLanguage'),
+      value: OptionKey.DUAL_LANGUAGE,
     },
-    { title: t('options.categorizeItems'), value: OptionKey.CATEGORIZE_ITEMS },
     {
-      title: t('options.removeTimers'),
+      title: t('options.mainFlags.categorizeItems'),
+      value: OptionKey.CATEGORIZE_ITEMS,
+    },
+    {
+      title: t('options.mainFlags.removeTimers'),
       value: OptionKey.REMOVE_TIMERS,
     },
   ];
 
-  const { selectedOptions = [] } = <{ selectedOptions?: OptionKey[] }>(
-    await prompt({
-      choices: modOptions,
-      message: t('title'),
-      min: 1,
-      name: 'selectedOptions',
-      type: 'multiselect',
-    })
+  let hasExit = false;
+
+  const { dialogColor, mainLanguage, mainOptions = [], secondaryLanguage } = <
+    {
+      dialogColor?: string;
+      mainLanguage?: GameSupportedLanguage;
+      mainOptions?: OptionKey[];
+      secondaryLanguage?: GameSupportedLanguage;
+    }
+  >await prompt(
+    [
+      {
+        choices,
+        message: t('title'),
+        min: 1,
+        name: 'mainOptions',
+        type: 'multiselect',
+      },
+      {
+        choices: gameLanguageOptions,
+        message: t('options.selectLanguage.main'),
+        name: 'mainLanguage',
+        type: (prev?: OptionKey[]) => {
+          const shouldAskMainLanguage =
+            prev?.includes(OptionKey.DUAL_LANGUAGE) ||
+            prev?.includes(OptionKey.CATEGORIZE_ITEMS);
+
+          return shouldAskMainLanguage ? 'select' : null;
+        },
+      },
+      {
+        message: t('options.selectLanguage.secondary'),
+        name: 'secondaryLanguage',
+        // NOTE: If mainLanguage is EN, secondary options exclude EN; otherwise (e.g., ES), secondary options are only EN.
+        choices: (prev: GameSupportedLanguage) =>
+          gameLanguageOptions.filter(({ value }) =>
+            prev === GameSupportedLanguage.ENGLISH
+              ? value !== prev
+              : value === GameSupportedLanguage.ENGLISH,
+          ),
+        type: (
+          _,
+          { mainLanguage: selectedLanguage, mainOptions: selectedOptions },
+        ) => {
+          const shouldAskSecondaryLanguageOption =
+            selectedLanguage &&
+            selectedOptions?.includes(OptionKey.DUAL_LANGUAGE);
+
+          return shouldAskSecondaryLanguageOption && selectedLanguage
+            ? 'select'
+            : null;
+        },
+      },
+      {
+        initial: true,
+        message: t('options.selectColor.useColor'),
+        name: 'useColor',
+        type: (
+          _,
+          {
+            mainLanguage: selectedMainLanguage,
+            secondaryLanguage: selectedSecondaryLanguage,
+          },
+        ) =>
+          selectedMainLanguage && selectedSecondaryLanguage ? 'confirm' : null,
+      },
+      {
+        initial: DEFAULT_DIALOG_COLOR,
+        name: 'dialogColor',
+        message: t('options.selectColor.dialogColor', {
+          color: DEFAULT_DIALOG_COLOR,
+        }),
+        type: (_, { useColor: selectedUseColor }) =>
+          selectedUseColor ? 'text' : null,
+        validate: (val: string) =>
+          HEX_COLOR_REGEX.test(val) ? true : t('validations.invalidHexColor'),
+      },
+    ],
+    {
+      onCancel: () => {
+        hasExit = true;
+      },
+    },
   );
 
-  const isSelected = (key: OptionKey) => selectedOptions.includes(key);
-
-  const shouldShowLocalizationPromptsMenu =
-    isSelected(OptionKey.DUAL_LANGUAGE) ||
-    isSelected(OptionKey.DUAL_LANGUAGE_WITH_COLOR) ||
-    isSelected(OptionKey.CATEGORIZE_ITEMS);
-
-  let dialogColor: string | undefined;
-  let mainLanguage: GameSupportedLanguage | undefined;
-  let secondaryLanguage: GameSupportedLanguage | undefined;
-
-  if (shouldShowLocalizationPromptsMenu) {
-    const result = await localizationPromptsMenu({
-      hasColorOption: isSelected(OptionKey.DUAL_LANGUAGE_WITH_COLOR),
-      hasSecondaryLanguageOption:
-        isSelected(OptionKey.DUAL_LANGUAGE) ||
-        isSelected(OptionKey.DUAL_LANGUAGE_WITH_COLOR),
-    });
-
-    dialogColor = result.dialogColor;
-    mainLanguage = result.mainLanguage;
-    secondaryLanguage = result.secondaryLanguage;
+  if (hasExit) {
+    return;
   }
 
-  // TODO: Don't call if user has exited (Ctrl + C) modMenu / localizationPromptsMenu
-  processUserOptions({
+  await processUserOptions({
     localization: {
       dialogColor,
       mainLanguage,
       secondaryLanguage,
-      hasCategories: isSelected(OptionKey.CATEGORIZE_ITEMS),
+      hasCategories: mainOptions.includes(OptionKey.CATEGORIZE_ITEMS),
     },
     timers: {
-      hasRemoveTimers: isSelected(OptionKey.REMOVE_TIMERS),
+      hasRemoveTimers: mainOptions.includes(OptionKey.REMOVE_TIMERS),
     },
   });
 };

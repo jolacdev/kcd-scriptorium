@@ -26,25 +26,25 @@
       "exit": "Exit"
     }
   },
-  "moddingMenu": {
+  "modMenu": {
     "title": "Modding Toolkit - Select an option",
     "options": {
-      "dualLanguage": "Generate dual-language content",
-      "dualLanguageWithColor": "Generate dual-language content with custom dialog colors",
-      "categorizeItems": "Categorize items",
-      "removeTimers": "Remove conversation response timers"
-    },
-    "localizationPromptsMenu": {
-      "prompts": {
-        "selectLanguage": {
-          "main": "Select main language",
-          "secondary": "Select secondary language"
-        },
-        "dialogColor": "Enter a valid hexadecimal color (e.g. {{color}})"
+      "mainFlags": {
+        "dualLanguage": "Generate dual-language content",
+        "categorizeItems": "Categorize items",
+        "removeTimers": "Remove conversation response timers"
       },
-      "validations": {
-        "invalidHexColor": "Enter a valid hex color"
+      "selectLanguage": {
+        "main": "Select main language",
+        "secondary": "Select secondary language"
+      },
+      "selectColor": {
+        "useColor": "Do you want to apply a custom color to the secondary language in dialogs?",
+        "dialogColor": "Enter a valid hexadecimal color (e.g. {{color}})"
       }
+    },
+    "validations": {
+      "invalidHexColor": "Enter a valid hex color"
     }
   },
   "gameFolderMenu": {
