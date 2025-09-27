@@ -5,7 +5,7 @@ import {
   localizationPakMap,
   ModFolder,
 } from '../constants/constants.ts';
-import { isPakFile, type PakFile } from './pakUtils.ts';
+import type { PakFile } from './pakUtils.ts';
 
 /**
  * Returns the full path to the localization PAK file for a given language selection.
@@ -31,9 +31,5 @@ export const getCorrespondingLocalizationPakPath = (
   const localizationPak = localizationPakMap[pakLanguage];
   const pakPath = path.join(gamePath, ModFolder.Localization, localizationPak);
 
-  if (!isPakFile(pakPath)) {
-    return;
-  }
-
-  return pakPath;
+  return pakPath as PakFile;
 };
