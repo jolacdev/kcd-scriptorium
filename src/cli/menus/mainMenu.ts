@@ -24,6 +24,7 @@ const menuOptions: Record<OptionKey, () => Promise<void>> = {
 export const mainMenu = async () => {
   const isGamePathSet = hasStoreSetting('gamePath');
 
+  // TODO: Handle onClose (Ctrl + C)
   const { value } = <{ value: OptionKey }>await prompt({
     message: t('appTitle'),
     name: 'value',

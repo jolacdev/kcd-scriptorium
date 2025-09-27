@@ -5,13 +5,12 @@ import { AppState } from '../AppState.ts';
 import {
   GameSupportedLanguage,
   LocalizationFile,
-  localizationPakMap,
+  localizationFilesMap,
   ModFolder,
-  SUPPORTED_LOCALIZATION_FILES,
 } from '../constants/constants.ts';
 import { getCorrespondingLocalizationPakPath } from './getCorrespondingLocalizationPakPath.ts';
-import { isPakFile, readXmlFromPak, writePak } from './pakUtils.ts';
-import { isXmlFile, writeXml } from './xml/fileUtils.ts';
+import { readXmlFromPak, writePak } from './pakUtils.ts';
+import { writeXml } from './xml/fileUtils.ts';
 import { transformDialogTranslation } from './xml/localization/transformDialogTranslation.ts';
 import { transformHUDTranslation } from './xml/localization/transformHUDTranslation.ts';
 import { transformIngameTranslation } from './xml/localization/transformIngameTranslation.ts';
@@ -48,45 +47,63 @@ const fileTransformers: Record<LocalizationFile, TransformerFn | undefined> = {
 
 type TransformLocalizationXmlContentOptions = {
   content: string;
+  file: LocalizationFile;
   language: GameSupportedLanguage;
-  transformerFn: TransformerFn;
   dialogColor?: string;
+  transformerFn?: TransformerFn;
   hasCategories: boolean;
   hasDualLanguage: boolean;
+  isDebugMode: boolean;
 };
 
 const transformLocalizationXmlContent = ({
   content,
   dialogColor,
+  file,
   language,
   transformerFn,
   hasCategories,
   hasDualLanguage,
-}: TransformLocalizationXmlContentOptions) =>
-  content.replace(XML_ROW_CELL_GLOBAL_REGEX, (_, id, english, translation) => {
-    const isTranslated = english !== translation;
+  isDebugMode,
+}: TransformLocalizationXmlContentOptions) => {
+  const debugPrefix = isDebugMode
+    ? `${localizationFilesMap[file].prefix}: `
+    : '';
 
-    const isFirstTranslationEnglish =
-      language === GameSupportedLanguage.ENGLISH;
-    const [firstTranslation, lastTranslation] = isFirstTranslationEnglish
-      ? [english, translation]
-      : [translation, english];
+  return content.replace(
+    XML_ROW_CELL_GLOBAL_REGEX,
+    (_, id, english, translation) => {
+      // NOTE: In debug mode, file prefixes are added to the texts so players can identify the source file.
+      if (!transformerFn) {
+        return `<Row><Cell>${id}</Cell><Cell>${english}</Cell><Cell>${debugPrefix}${translation}</Cell></Row>`;
+      }
 
-    const transformedTranslation = transformerFn({
-      id,
-      color: dialogColor ?? '',
-      firstTranslation,
-      language,
-      lastTranslation,
-      hasCategories,
-      hasDualLanguage,
-      isTranslated,
-    });
+      const isTranslated = english !== translation;
 
-    return `<Row><Cell>${id}</Cell><Cell>${english}</Cell><Cell>${transformedTranslation}</Cell></Row>`;
-  });
+      const isFirstTranslationEnglish =
+        language === GameSupportedLanguage.ENGLISH;
+      const [firstTranslation, lastTranslation] = isFirstTranslationEnglish
+        ? [english, translation]
+        : [translation, english];
+
+      const transformedTranslation = transformerFn({
+        id,
+        color: dialogColor ?? '',
+        firstTranslation,
+        language,
+        lastTranslation,
+        hasCategories,
+        hasDualLanguage,
+        isTranslated,
+      });
+
+      return `<Row><Cell>${id}</Cell><Cell>${english}</Cell><Cell>${debugPrefix}${transformedTranslation}</Cell></Row>`;
+    },
+  );
+};
 
 type GenerateLocalizationFilesOptions = {
+  localizationFiles: LocalizationFile[];
   mainLanguage: GameSupportedLanguage;
   dialogColor?: string;
   secondaryLanguage?: GameSupportedLanguage;
@@ -96,11 +113,13 @@ type GenerateLocalizationFilesOptions = {
 
 export const generateLocalizationFiles = async ({
   dialogColor,
+  localizationFiles,
   mainLanguage: language,
   secondaryLanguage,
   hasCategories,
   hasDualLanguage,
 }: GenerateLocalizationFilesOptions) => {
+  const appState = AppState.getInstance();
   const temporaryXmlFilePaths = [];
   const localizationDirPath = path.join(
     process.cwd(),
@@ -109,7 +128,7 @@ export const generateLocalizationFiles = async ({
   );
 
   const inputPak = getCorrespondingLocalizationPakPath(
-    AppState.getInstance().gamePath!,
+    appState.gamePath!,
     language,
     secondaryLanguage,
   );
@@ -118,9 +137,11 @@ export const generateLocalizationFiles = async ({
     throw new Error('No localization input PAK file found.');
   }
 
-  for (const file of SUPPORTED_LOCALIZATION_FILES) {
+  for (const file of localizationFiles) {
     const transformerFn = fileTransformers[file];
-    if (!transformerFn) {
+
+    // NOTE: Skip processing this file if it has no transformer, unless in-game debug mode is enabled.
+    if (!transformerFn && !appState.isDebugMode) {
       continue;
     }
 
@@ -136,33 +157,28 @@ export const generateLocalizationFiles = async ({
     }
 
     const outputXml = path.join(localizationDirPath, file);
-    if (!isXmlFile(outputXml)) {
-      continue;
-    }
-
     const transformedXml = transformLocalizationXmlContent({
       content: xml,
       dialogColor,
+      file,
       language,
       transformerFn,
       hasCategories,
       hasDualLanguage,
+      isDebugMode: appState.isDebugMode,
     });
+
     writeXml(outputXml, transformedXml);
     temporaryXmlFilePaths.push(outputXml);
   }
 
-  const outputPak = path.join(
-    localizationDirPath,
-    localizationPakMap[language],
-  );
+  const outputPakName = path.basename(inputPak);
+  const outputPak = path.join(localizationDirPath, outputPakName);
 
-  if (isPakFile(outputPak)) {
-    const xmlInputFiles = temporaryXmlFilePaths.map((xmlFile) => ({
-      filePath: xmlFile,
-    }));
+  const xmlInputFiles = temporaryXmlFilePaths.map((xmlFile) => ({
+    filePath: xmlFile,
+  }));
 
-    await writePak(outputPak, xmlInputFiles);
-    temporaryXmlFilePaths.forEach((file) => fs.unlinkSync(file));
-  }
+  await writePak(outputPak, xmlInputFiles);
+  temporaryXmlFilePaths.forEach((file) => fs.unlinkSync(file));
 };
