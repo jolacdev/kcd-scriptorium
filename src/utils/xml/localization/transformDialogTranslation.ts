@@ -18,7 +18,7 @@ export const transformDialogTranslation = ({
   lastTranslation,
   hasDualLanguage,
   isTranslated,
-}: DialogTransformerOptions) => {
+}: DialogTransformerOptions): string => {
   if (!hasDualLanguage || !isTranslated) {
     return firstTranslation;
   }

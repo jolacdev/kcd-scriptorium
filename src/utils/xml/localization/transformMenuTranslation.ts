@@ -16,7 +16,7 @@ export const transformMenuTranslation = ({
   lastTranslation,
   hasDualLanguage,
   isTranslated,
-}: MenuTransformerOptions) => {
+}: MenuTransformerOptions): string => {
   // TODO: To confirm – The L-Shift key is displayed twice in the vanilla game? e.g. gallop in a horse
   const isDescription = id.includes('_desc');
   const isCodexContent = id.startsWith('ui_codex_cont_');

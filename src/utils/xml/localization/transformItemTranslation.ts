@@ -22,7 +22,7 @@ export const transformItemTranslation = ({
   hasCategories,
   hasDualLanguage,
   isTranslated,
-}: ItemTransformerOptions) => {
+}: ItemTransformerOptions): string => {
   const category = findLocalizedCategoryByItemId(id, language);
   const isItemCategorized = !!category;
   const isDescription =
