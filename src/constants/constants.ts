@@ -21,11 +21,9 @@ export enum GameSupportedLanguage {
   UKRAINIAN = 'uk',
 }
 
-type LocalizationPakFile = `${string}_xml.pak`;
-
 export const localizationPakMap: Record<
   GameSupportedLanguage,
-  LocalizationPakFile
+  `${string}_xml.pak`
 > = {
   [GameSupportedLanguage.CHINESE]: 'Chineses_xml.pak',
   [GameSupportedLanguage.CZECH]: 'Czech_xml.pak',
@@ -43,70 +41,50 @@ export const localizationPakMap: Record<
   [GameSupportedLanguage.UKRAINIAN]: 'Ukrainian_xml.pak',
 };
 
-const LOCALIZATION = 'Localization\\{Language}_xml.pak\\text_*_*.xml';
-const REMOVE_TIMERS = 'Data\\Tables.pak\\Libs\\Tables\\text\\topic.xml';
-
-// NOTE: Files to consider skip its localization: HUD, Menus
-// NOTE: https://modding.wiki/en/kingdomcomedeliverance2/mod-development/localization/tutorials/localization
+// NOTE: KCD2 wiki with documented files: https://modding.wiki/en/kingdomcomedeliverance2/mod-development/localization/tutorials/localization
 export enum LocalizationFile {
-  // DIALOG
-  // Dialogs lines and dialog options (actions).
-  Dialog = 'text_ui_dialog.xml',
-  // HUD
-  // TODO: HUD Interactions With Bodies?: [ui_hud_*_body]
-  HUD = 'text_ui_HUD.xml', // Drop / Pick up body
-  // INGAME
-  // TODO: <-- HUD Warnins (You can't jump while overloaded., You are in a private area, Reputation lost, "You've washed yourself..."...), Names???
-  Ingame = 'text_ui_ingame.xml',
-  // ITEMS
-  // TODO:
-  // - Item Names and Descriptions.
-  // - <-- Letter and Book contents??
-  // - ???
-  Items = 'text_ui_items.xml',
-  // MENUS
-  // TODO: <-- Check if menu descriptions (e.g. stats description) should be translated.
-  Menus = 'text_ui_menus.xml', // Map legend (menu+), Menu tab/subtabs names (Inventory, Player...), Item stats (Min. Strength, etc.)
-  // MINIGAMES
-  // TODO:
-  // - Buldings: Stables, Tavern, Bakery: [ui_nh_structure_name_*, ui_nh_structure_desc_*],
-  // - Objectives?: Village income, Village capacity: [ui_nh_objective_*]
-  // - Resources?: Charcoal, Grain, Livestock, Stone: [ui_nh_res_*]??
-  // - Black bread, Altar, Mead...?: [ui_nh_eff_*]??
-  // - Dice Games, Brewey, Altar, Alchemy Bench...?: [ui_nh_add_*]??
-  Minigames = 'text_ui_minigames.xml',
-  // MISC
-  // TODO:
-  Misc = 'text_ui_misc.xml',
-  // QUEST
-  // TODO:
-  Quest = 'text_ui_quest.xml', // Map legend (menu-),
-  // RICH PRESENCE
-  // TODO:
-  RichPresence = 'text_rich_presence.xml',
-  // SOUL
-  // - Character names and possessions (factions): [char_*_uiName, soul_ui_name_* && ui_fac_*]
-  // - Perk Names and Descriptions: [perk_*_name && perk_*_desc]
-  // - Buff Names and Descriptions: [buff_* && buff_*_desc]
-  // - Stats: [stat_*]
-  // - Skill Names, Descriptions and Levelups: [ui_skill_* && ui_skill_*_desc0 && ui_skill_*_levelup]
-  // - Bodyparts?: [ui_bodypart_*]
-  // - Codex Names: [ui_codex_name_*]
-  // - Other Stat Names, Descriptions and Levelups: [ui_stat_*, ui_stat_*_desc, ui_stat_*_levelup]
-  // - Tutorial names [ui_tutorial_name_*]
-  // - Unconscious states?: [unconscious && unconscious_*]
-  Soul = 'text_ui_soul.xml', // Part of the character stats (Agility, Speech... *and their descriptions)
-  // TUTORIALS
-  // TODO:
-  Tutorials = 'text_ui_tutorials.xml',
+  Dialog = 'text_ui_dialog.xml', // Dialog lines and options
+  HUD = 'text_ui_HUD.xml', // UI Actions?: Drop body / Pick up body
+  Ingame = 'text_ui_ingame.xml', // UI Actions, loading screen hints, notifications
+  Items = 'text_ui_items.xml', // Item names and descriptions
+  Menus = 'text_ui_menus.xml', // Menu texts (tabs, legends, item stats, etc.)
+  Minigames = 'text_ui_minigames.xml', // TODO: CHECK IN DEBUG // Minigame content (buildings, resources, objectives, etc.)
+  Misc = 'text_ui_misc.xml', // TODO: CHECK IN DEBUG
+  Quest = 'text_ui_quest.xml', // Quest titles and descriptions
+  RichPresence = 'text_rich_presence.xml', // NOTE: No need to translate. A few translations for in-game status messages for Steam, Xbox...
+  Soul = 'text_ui_soul.xml', // Character stats, skills, perks, buffs, factions, etc.
+  Tutorials = 'text_ui_tutorials.xml', // NOTE: Hard to translate. Translations for tutorial texts or notes, mostly shown in non-responsive modals.
 }
 
-export const SUPPORTED_LOCALIZATION_FILES: LocalizationFile[] = [
-  LocalizationFile.Dialog,
-  LocalizationFile.HUD,
-  LocalizationFile.Ingame,
-  LocalizationFile.Items,
-  LocalizationFile.Menus,
-  LocalizationFile.Quest,
-  LocalizationFile.Soul,
-];
+export const localizationFilesMap: Record<
+  LocalizationFile,
+  {
+    prefix: string;
+    supported: boolean;
+  }
+> = {
+  [LocalizationFile.Dialog]: { prefix: 'D', supported: true },
+  [LocalizationFile.HUD]: { prefix: 'H', supported: true },
+  [LocalizationFile.Ingame]: { prefix: 'G', supported: true },
+  [LocalizationFile.Items]: { prefix: 'I', supported: true },
+  [LocalizationFile.Menus]: { prefix: 'M', supported: true },
+  [LocalizationFile.Misc]: { prefix: 'MI', supported: false },
+  [LocalizationFile.Quest]: { prefix: 'Q', supported: true },
+  [LocalizationFile.Soul]: { prefix: 'S', supported: true },
+  [LocalizationFile.Tutorials]: { prefix: 'T', supported: false },
+  [LocalizationFile.Minigames]: {
+    prefix: 'MG',
+    supported: false,
+  },
+  [LocalizationFile.RichPresence]: {
+    prefix: 'RP',
+    supported: false,
+  },
+};
+
+export const timersPakData = {
+  pak: 'Tables.pak',
+  pakPathToFiles: 'Libs\\Tables\\text',
+  tbl: 'topic.tbl',
+  xml: 'topic.xml',
+};
