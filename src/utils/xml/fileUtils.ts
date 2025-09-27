@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { Folder } from '../../constants/constants.ts';
+import { ModFolder } from '../../constants/constants.ts';
 
 type XmlFilePath = `${string}.xml`;
 
@@ -62,7 +62,7 @@ export const isXmlFile = (filePath: string): filePath is XmlFilePath =>
  * Removes the entire mod folder and all its contents from the current working directory.
  */
 export const removeModFolder = () => {
-  fs.rmSync(path.join(process.cwd(), Folder.Mod), {
+  fs.rmSync(path.join(process.cwd(), ModFolder.Root), {
     force: true,
     recursive: true,
   });

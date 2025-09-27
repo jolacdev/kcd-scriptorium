@@ -1,3 +1,9 @@
+export enum ModFolder {
+  Data = 'Data',
+  Localization = 'Localization',
+  Root = 'Scriptorium',
+}
+
 export enum GameSupportedLanguage {
   CHINESE = 'zh',
   CZECH = 'cs',
@@ -36,12 +42,6 @@ export const localizationPakMap: Record<
   [GameSupportedLanguage.TURKISH]: 'Turkish_xml.pak',
   [GameSupportedLanguage.UKRAINIAN]: 'Ukrainian_xml.pak',
 };
-
-export enum Folder {
-  Data = 'Data',
-  Localization = 'Localization',
-  Mod = 'Localization_Toolkit',
-}
 
 const LOCALIZATION = 'Localization\\{Language}_xml.pak\\text_*_*.xml';
 const REMOVE_TIMERS = 'Data\\Tables.pak\\Libs\\Tables\\text\\topic.xml';

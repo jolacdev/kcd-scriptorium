@@ -15,4 +15,7 @@ storybook-static
 coverage
 
 # Store Variables
-kcd-toolkit-config.json
+scriptorium-settings.json
+
+# Mod Folder
+Scriptorium

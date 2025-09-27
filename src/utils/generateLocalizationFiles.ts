@@ -3,10 +3,10 @@ import path from 'path';
 
 import { AppState } from '../AppState.ts';
 import {
-  Folder,
   GameSupportedLanguage,
   LocalizationFile,
   localizationPakMap,
+  ModFolder,
   SUPPORTED_LOCALIZATION_FILES,
 } from '../constants/constants.ts';
 import { getCorrespondingLocalizationPakPath } from './getCorrespondingLocalizationPakPath.ts';
@@ -104,8 +104,8 @@ export const generateLocalizationFiles = async ({
   const temporaryXmlFilePaths = [];
   const localizationDirPath = path.join(
     process.cwd(),
-    Folder.Mod,
-    Folder.Localization,
+    ModFolder.Root,
+    ModFolder.Localization,
   );
 
   const inputPak = getCorrespondingLocalizationPakPath(

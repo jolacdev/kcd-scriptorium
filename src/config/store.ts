@@ -11,7 +11,7 @@ type StoreKey = keyof StoreData;
 
 // TODO: Handle parse JSON file errors (e.g. SyntaxError: Unexpected end of JSON input)
 const config = new Conf<StoreData>({
-  configName: 'kcd-toolkit-config',
+  configName: 'scriptorium-settings',
   cwd: process.cwd(),
   fileExtension: 'json',
 });

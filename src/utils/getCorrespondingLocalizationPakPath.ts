@@ -1,9 +1,9 @@
 import path from 'path';
 
 import {
-  Folder,
   GameSupportedLanguage,
   localizationPakMap,
+  ModFolder,
 } from '../constants/constants.ts';
 import { isPakFile, type PakFile } from './pakUtils.ts';
 
@@ -29,7 +29,7 @@ export const getCorrespondingLocalizationPakPath = (
       ? secondaryLanguage
       : mainLanguage;
   const localizationPak = localizationPakMap[pakLanguage];
-  const pakPath = path.join(gamePath, Folder.Localization, localizationPak);
+  const pakPath = path.join(gamePath, ModFolder.Localization, localizationPak);
 
   if (!isPakFile(pakPath)) {
     return;
