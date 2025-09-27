@@ -5,6 +5,7 @@ import { SupportedLanguage } from './i18n.ts';
 type StoreData = {
   gamePath: string;
   language: SupportedLanguage;
+  isDebugMode: boolean;
 };
 
 type StoreKey = keyof StoreData;

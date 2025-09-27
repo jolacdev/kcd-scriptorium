@@ -9,13 +9,16 @@ export class AppState {
   private _exit = false;
   private _gamePath: null | string = null;
   private _language: null | SupportedLanguage = null;
+  private _isDebugMode: boolean = false;
 
   private constructor() {
     const storedGamePath = getStoreSetting('gamePath') ?? '';
     const storedLanguage = getStoreSetting('language') ?? '';
+    const isDebugMode = getStoreSetting('isDebugMode') ?? false;
 
     this._gamePath = isValidGamePath(storedGamePath) ? storedGamePath : null;
     this._language = isValidLanguage(storedLanguage) ? storedLanguage : null;
+    this._isDebugMode = typeof isDebugMode === 'boolean' ? isDebugMode : false;
   }
 
   public static getInstance(): AppState {
@@ -68,5 +71,9 @@ export class AppState {
 
   requestExit() {
     this._exit = true;
+  }
+
+  get isDebugMode() {
+    return this._isDebugMode;
   }
 }
