@@ -10,7 +10,7 @@ export default {
   mode: 'production',
   target: 'node22',
   experiments: {
-    outputModule: true, // Bundle will be ESM
+    outputModule: false, // Bundle will be CJS. Set true for ESM.
   },
   optimization: {
     minimize: true,
@@ -27,10 +27,10 @@ export default {
     ],
   },
   output: {
-    filename: 'scriptorium.js',
+    filename: 'scriptorium.cjs', // Force CJS extension
     path: path.resolve(__dirname, 'dist'),
     library: {
-      type: 'module', // Consumers will be informed to use ESM.
+      type: 'commonjs', // Consumers will use it as CJS. Set "module" for ESM.
     },
   },
 };

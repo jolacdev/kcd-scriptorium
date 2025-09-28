@@ -1,0 +1,6 @@
+{
+  "main": "./dist/scriptorium.cjs",
+  "output": "./temp/sea-prep.blob",
+  "useCodeCache": true,
+  "disableExperimentalSEAWarning": true
+}
