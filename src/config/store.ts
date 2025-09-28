@@ -1,6 +1,11 @@
 import Conf from 'conf';
+import fs from 'fs';
+import path from 'path';
 
 import { SupportedLanguage } from './i18n.ts';
+
+const CONFIG_FILE_NAME = 'scriptorium-settings';
+const CONFIG_FILE_EXTENSION = 'json';
 
 type StoreData = {
   gamePath: string;
@@ -10,12 +15,35 @@ type StoreData = {
 
 type StoreKey = keyof StoreData;
 
-// TODO: Handle parse JSON file errors (e.g. SyntaxError: Unexpected end of JSON input)
-const config = new Conf<StoreData>({
-  configName: 'scriptorium-settings',
-  cwd: process.cwd(),
-  fileExtension: 'json',
-});
+const createConfig = (): Conf<StoreData> => {
+  try {
+    return new Conf<StoreData>({
+      configName: CONFIG_FILE_NAME,
+      cwd: process.cwd(),
+      fileExtension: CONFIG_FILE_EXTENSION,
+    });
+  } catch (error) {
+    const syntaxErrorMessage = `⚠️  Configuration file '${CONFIG_FILE_NAME}.${CONFIG_FILE_EXTENSION}' is invalid JSON and will be reset.`;
+    console.error(
+      syntaxErrorMessage,
+      error instanceof Error ? error.message : error,
+    );
+
+    fs.writeFileSync(
+      path.join(process.cwd(), `${CONFIG_FILE_NAME}.${CONFIG_FILE_EXTENSION}`),
+      '{}',
+      'utf-8',
+    );
+
+    return new Conf<StoreData>({
+      configName: CONFIG_FILE_NAME,
+      cwd: process.cwd(),
+      fileExtension: CONFIG_FILE_EXTENSION,
+    });
+  }
+};
+
+const config: Conf<StoreData> = createConfig();
 
 export const setStoreSetting = <T extends StoreKey>(
   key: T,
