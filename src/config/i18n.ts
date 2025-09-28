@@ -1,6 +1,9 @@
 import i18next from 'i18next';
 import FsBackend from 'i18next-fs-backend';
 
+import en from '../locales/en/translation.json' with { type: 'json' };
+import es from '../locales/es/translation.json' with { type: 'json' };
+
 // NOTE: Workaround for CJS/ESM interop default export issue.
 type PossibleDefaultExport<T> = T & { default?: T };
 
@@ -19,8 +22,11 @@ export const initI18n = async (
     fallbackLng: SupportedLanguage.ENGLISH,
     lng,
     supportedLngs: Object.values(SupportedLanguage),
-    backend: {
-      loadPath: './src/locales/{{lng}}/{{ns}}.json',
+    // NOTE: Final bundle has issues with relative paths. Replaced with direct imports.
+    // backend: { loadPath: './src/locales/{{lng}}/{{ns}}.json' }
+    resources: {
+      en: { translation: en },
+      es: { translation: es },
     },
   });
 
