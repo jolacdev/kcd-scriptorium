@@ -4,7 +4,10 @@
 # Dependencies
 node_modules
 
-# App Build
+# Temp TSC Build
+temp
+
+# Webpack Single Build
 dist
 
 # Storybook Build
