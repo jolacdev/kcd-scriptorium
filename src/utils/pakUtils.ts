@@ -5,8 +5,6 @@ import yazl from 'yazl';
 
 export type PakFile = `${string}.pak`;
 
-// TODO: Add error messages to i18n.
-
 /**
  * Checks if the given file path ends with `.pak`.
  *

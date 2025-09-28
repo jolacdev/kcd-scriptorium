@@ -23,7 +23,7 @@ export const transformIngameTranslation = ({
     return firstTranslation;
   }
 
-  // TODO: Review other UI actions with inconsistent naming, expand whitelist if necessary.
+  // NOTE: Items with inconsistent namings that should be included.
   const whiteList = [
     'ui_door_close',
     'ui_door_open',
