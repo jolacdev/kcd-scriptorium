@@ -17,7 +17,7 @@ export const transformSoulTranslation = ({
   hasDualLanguage,
   isTranslated,
 }: SoulTransformerOptions): string => {
-  // TODO: TEMP Comment: blackList = ['ui_fac_', 'stat_']
+  // NOTE: Items that would be blacklisted if blacklist support were implemented: ['ui_fac_', 'stat_']
   if (!hasDualLanguage || !isTranslated) {
     return firstTranslation;
   }
