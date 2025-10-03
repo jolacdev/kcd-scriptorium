@@ -20,26 +20,29 @@ const modMenuFixture = {
   value: OptionKey.MODDING_TOOLKIT,
 };
 
-const buildPromptFixture = (gamePath = ''): Parameters<typeof prompts>[0] => ({
-  message: 'appTitle',
-  name: 'value',
-  type: 'select',
-  choices: [
-    ...(gamePath ? [modMenuFixture] : []),
-    {
-      title: `mainMenu.options.changeInstallFolder${gamePath ? ` (${gamePath})` : ''}`,
-      value: OptionKey.CHANGE_INSTALL_FOLDER,
-    },
-    {
-      title: 'mainMenu.options.changeLanguage',
-      value: OptionKey.CHANGE_LANGUAGE,
-    },
-    {
-      title: 'mainMenu.options.exit',
-      value: OptionKey.EXIT,
-    },
-  ],
-});
+const buildPromptFixture = (gamePath = ''): Parameters<typeof prompts> => [
+  {
+    message: 'appTitle',
+    name: 'value',
+    type: 'select',
+    choices: [
+      ...(gamePath ? [modMenuFixture] : []),
+      {
+        title: `mainMenu.options.changeInstallFolder${gamePath ? ` (${gamePath})` : ''}`,
+        value: OptionKey.CHANGE_INSTALL_FOLDER,
+      },
+      {
+        title: 'mainMenu.options.changeLanguage',
+        value: OptionKey.CHANGE_LANGUAGE,
+      },
+      {
+        title: 'mainMenu.options.exit',
+        value: OptionKey.EXIT,
+      },
+    ],
+  },
+  { onCancel: expect.any(Function) },
+];
 
 const mockStoreGamePath = (gamePath?: string) => {
   vi.mocked(hasStoreSetting).mockReturnValue(!!gamePath);
@@ -68,7 +71,7 @@ describe('mainMenu', () => {
       await mainMenu();
 
       expect(promptSpy).toHaveBeenCalledExactlyOnceWith(
-        buildPromptFixture(gamePath),
+        ...buildPromptFixture(gamePath),
       );
     },
   );
