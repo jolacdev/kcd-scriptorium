@@ -1,6 +1,6 @@
-import { applyFontColor } from './common.ts';
-import { BR, INLINE_SEPARATOR } from './constants.ts';
-import type { IngameTransformerOptions } from './types.ts';
+import { BR, INLINE_SEPARATOR } from '../constants.ts';
+import { applyFontColor } from '../helpers/applyFontColor.ts';
+import type { IngameTransformerOptions } from '../types.ts';
 
 /**
  * @note This function is intended to work with `text_ui_ingame.xml` translations.

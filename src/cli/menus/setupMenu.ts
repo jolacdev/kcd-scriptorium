@@ -1,4 +1,4 @@
-import { AppState } from '../../AppState.ts';
+import { AppState } from '../../core/AppState.ts';
 import { gameFolderMenu } from './gameFolderMenu.ts';
 import { languageMenu } from './languageMenu.ts';
 

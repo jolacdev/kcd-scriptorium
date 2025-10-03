@@ -1,6 +1,6 @@
-import categories from '../../data/categories.json' with { type: 'json' };
-import categorizedItems from '../../data/categorizedItems.json' with { type: 'json' };
-import { GameSupportedLanguage } from '../constants/constants.ts';
+import categories from '../../../../../data/categories.json' with { type: 'json' };
+import categorizedItems from '../../../../../data/categorizedItems.json' with { type: 'json' };
+import { GameSupportedLanguage } from '../../../../constants/constants.ts';
 
 type CategoryKeys = keyof typeof categories;
 

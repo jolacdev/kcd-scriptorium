@@ -1,7 +1,7 @@
 import fs from 'fs';
 import i18next from 'i18next';
 
-import { AppState } from '../../AppState.ts';
+import { AppState } from '../../core/AppState.ts';
 import { isValidGamePath } from '../../utils/validators/isValidGamePath.ts';
 import { prompt } from '../prompt.ts';
 

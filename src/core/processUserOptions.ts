@@ -1,5 +1,6 @@
 import { t } from 'i18next';
-import { AppState } from '../AppState.ts';
+import path from 'path';
+
 import {
   GameSupportedLanguage,
   KCD_MODS_FOLDER,
@@ -7,11 +8,11 @@ import {
   localizationFilesMap,
   ModFolder,
 } from '../constants/constants.ts';
-import { generateLocalizationFiles } from './generateLocalizationFiles.ts';
-import { generateTimersFile } from './generateTimersFile.ts';
+import { removeModFolder } from '../utils/fileUtils.ts';
+import { AppState } from './AppState.ts';
+import { generateLocalizationFiles } from './features/localization/generateLocalizationFiles.ts';
+import { generateTimersFile } from './features/timers/generateTimersFile.ts';
 import { resolveEffectiveLocalizationLanguage } from './resolveLocalizationLanguage.ts';
-import { removeModFolder } from './xml/fileUtils.ts';
-import path from 'path';
 
 type UserOptions = {
   localization: {

@@ -1,6 +1,6 @@
-import { findLocalizedCategoryByItemId } from '../../findLocalizedCategoryByItemId.ts';
-import { BR } from './constants.ts';
-import type { ItemTransformerOptions } from './types.ts';
+import { BR } from '../constants.ts';
+import { findLocalizedCategoryByItemId } from '../helpers/findLocalizedCategoryByItemId.ts';
+import type { ItemTransformerOptions } from '../types.ts';
 
 const MIN_CHARACTERS_TO_BE_DESCRIPTION = 50;
 

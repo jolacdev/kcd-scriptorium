@@ -1,27 +1,27 @@
 import fs from 'fs';
 import path from 'path';
 
-import { AppState } from '../AppState.ts';
 import {
   GameSupportedLanguage,
   LocalizationFile,
   localizationFilesMap,
   localizationPakMap,
   ModFolder,
-} from '../constants/constants.ts';
-import { readXmlFromPak, writePak } from './pakUtils.ts';
-import { writeXml } from './xml/fileUtils.ts';
-import { transformDialogTranslation } from './xml/localization/transformDialogTranslation.ts';
-import { transformHUDTranslation } from './xml/localization/transformHUDTranslation.ts';
-import { transformIngameTranslation } from './xml/localization/transformIngameTranslation.ts';
-import { transformItemTranslation } from './xml/localization/transformItemTranslation.ts';
-import { transformMenuTranslation } from './xml/localization/transformMenuTranslation.ts';
-import { transformQuestTranslation } from './xml/localization/transformQuestTranslation.ts';
-import { transformSoulTranslation } from './xml/localization/transformSoulTranslation.ts';
+} from '../../../constants/constants.ts';
+import { writeXml } from '../../../utils/fileUtils.ts';
+import { readXmlFromPak, writePak } from '../../../utils/pakUtils.ts';
+import { AppState } from '../../AppState.ts';
+import { transformDialogTranslation } from './transformers/transformDialogTranslation.ts';
+import { transformHUDTranslation } from './transformers/transformHUDTranslation.ts';
+import { transformIngameTranslation } from './transformers/transformIngameTranslation.ts';
+import { transformItemTranslation } from './transformers/transformItemTranslation.ts';
+import { transformMenuTranslation } from './transformers/transformMenuTranslation.ts';
+import { transformQuestTranslation } from './transformers/transformQuestTranslation.ts';
+import { transformSoulTranslation } from './transformers/transformSoulTranslation.ts';
 import type {
   BaseTransformerOptions,
   ExtendedTransformerOptions,
-} from './xml/localization/types.ts';
+} from './types.ts';
 
 // Find all occurrences of <Row></Row> containing exactly three <Cell></Cell> elements
 const XML_ROW_CELL_GLOBAL_REGEX =

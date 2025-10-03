@@ -2,7 +2,7 @@ import i18next from 'i18next';
 import type { Choice } from 'prompts';
 
 import { GameSupportedLanguage } from '../../constants/constants.ts';
-import { processUserOptions } from '../../utils/processUserOptions.ts';
+import { processUserOptions } from '../../core/processUserOptions.ts';
 import { prompt } from '../prompt.ts';
 
 enum OptionKey {

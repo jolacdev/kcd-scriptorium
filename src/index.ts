@@ -1,7 +1,7 @@
-import { AppState } from './AppState.ts';
 import { mainMenu } from './cli/menus/mainMenu.ts';
 import { setupMenu } from './cli/menus/setupMenu.ts';
 import { initI18n, SupportedLanguage } from './config/i18n.ts';
+import { AppState } from './core/AppState.ts';
 
 const state = AppState.getInstance();
 await initI18n(state.language ?? SupportedLanguage.ENGLISH);

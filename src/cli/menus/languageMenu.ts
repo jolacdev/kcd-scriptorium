@@ -2,8 +2,8 @@ import i18next from 'i18next';
 import type { TFunction } from 'i18next';
 import type { Choice } from 'prompts';
 
-import { AppState } from '../../AppState.ts';
 import { SupportedLanguage } from '../../config/i18n.ts';
+import { AppState } from '../../core/AppState.ts';
 import { prompt } from '../prompt.ts';
 
 const handleChangeLanguage = async (

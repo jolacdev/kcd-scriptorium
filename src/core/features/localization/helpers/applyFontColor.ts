@@ -1,4 +1,4 @@
-import { GREATER_THAN, LESS_THAN } from './constants.ts';
+import { GREATER_THAN, LESS_THAN } from '../constants.ts';
 
 /**
  * Wraps a text in a font color tag if an actual `color` is provided.

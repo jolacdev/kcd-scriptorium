@@ -1,7 +1,7 @@
 import { t } from 'i18next';
 
-import { AppState } from '../../AppState.ts';
 import { getStoreSetting, hasStoreSetting } from '../../config/store.ts';
+import { AppState } from '../../core/AppState.ts';
 import { prompt } from '../prompt.ts';
 import { exitMenu } from './exitMenu.ts';
 import { gameFolderMenu } from './gameFolderMenu.ts';

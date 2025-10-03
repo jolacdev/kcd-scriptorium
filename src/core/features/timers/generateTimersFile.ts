@@ -1,11 +1,11 @@
 import fs from 'fs';
 import path from 'path';
 
-import { AppState } from '../AppState.ts';
-import { ModFolder, timersPakData } from '../constants/constants.ts';
-import { readXmlFromPak, writePak } from './pakUtils.ts';
-import { writeXml } from './xml/fileUtils.ts';
-import { transformDialogTimers } from './xml/timers/transformDialogTimers.ts';
+import { ModFolder, timersPakData } from '../../../constants/constants.ts';
+import { writeXml } from '../../../utils/fileUtils.ts';
+import { readXmlFromPak, writePak } from '../../../utils/pakUtils.ts';
+import { AppState } from '../../AppState.ts';
+import { transformDialogTimers } from './transformers/transformDialogTimers.ts';
 
 export const generateTimersFile = async () => {
   const inputPak = path.join(

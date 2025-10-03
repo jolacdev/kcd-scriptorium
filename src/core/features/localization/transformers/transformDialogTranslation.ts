@@ -1,6 +1,6 @@
-import { applyFontColor } from './common.ts';
-import { BR } from './constants.ts';
-import type { DialogTransformerOptions } from './types.ts';
+import { BR } from '../constants.ts';
+import { applyFontColor } from '../helpers/applyFontColor.ts';
+import type { DialogTransformerOptions } from '../types.ts';
 
 /**
  * @note This function is intended to work with `text_ui_dialog.xml` translations.

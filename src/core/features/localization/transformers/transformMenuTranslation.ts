@@ -1,5 +1,5 @@
-import { BR } from './constants.ts';
-import type { MenuTransformerOptions } from './types.ts';
+import { BR } from '../constants.ts';
+import type { MenuTransformerOptions } from '../types.ts';
 
 /**
  * @note This function is intended to work with `text_ui_menus.xml` translations.

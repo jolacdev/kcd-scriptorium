@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { ModFolder } from '../../constants/constants.ts';
+import { ModFolder } from '../constants/constants.ts';
 
 type XmlFilePath = `${string}.xml`;
 

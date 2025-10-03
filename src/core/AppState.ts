@@ -1,7 +1,7 @@
-import { SupportedLanguage } from './config/i18n.ts';
-import { getStoreSetting, setStoreSetting } from './config/store.ts';
-import { isValidGamePath } from './utils/validators/isValidGamePath.ts';
-import { isValidLanguage } from './utils/validators/isValidLanguage.ts';
+import { SupportedLanguage } from '../config/i18n.ts';
+import { getStoreSetting, setStoreSetting } from '../config/store.ts';
+import { isValidGamePath } from '../utils/validators/isValidGamePath.ts';
+import { isValidLanguage } from '../utils/validators/isValidLanguage.ts';
 
 export class AppState {
   private static instance: AppState;

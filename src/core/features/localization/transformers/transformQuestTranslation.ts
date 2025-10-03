@@ -1,5 +1,5 @@
-import { BR, INLINE_SEPARATOR } from './constants.ts';
-import type { QuestTransformerOptions } from './types.ts';
+import { BR, INLINE_SEPARATOR } from '../constants.ts';
+import type { QuestTransformerOptions } from '../types.ts';
 
 /**
  * @note This function is intended to work with `text_ui_quest.xml` translations.

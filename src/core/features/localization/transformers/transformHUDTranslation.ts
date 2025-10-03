@@ -1,5 +1,5 @@
-import { INLINE_SEPARATOR } from './constants.ts';
-import type { HUDTransformerOptions } from './types.ts';
+import { INLINE_SEPARATOR } from '../constants.ts';
+import type { HUDTransformerOptions } from '../types.ts';
 
 /**
  * @note This function is intended to work with `text_ui_HUD.xml` translations.
