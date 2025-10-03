@@ -1,4 +1,6 @@
-# Scriptorium
+<div align="center">
+  <h1>Scriptorium</h1>
+</div>
 
 **CLI Toolkit for Kingdom Come: Deliverance I**
 
@@ -34,7 +36,7 @@ Here are some sample screenshots showing Scriptorium in action:
 - **Dialog color highlight**
   // TODO: Add image
 
-- **Categorized inventory with prefixes**
+- **Categorized items**
   // TODO: Add image
 
 - **Dialog timers removed**
@@ -77,13 +79,13 @@ There are two builds available:
 
 ## ⚠️ Compatibility & Limitations
 
-- **Partial translation**
+- **Partial Translation**
   This mod does **not** provide complete translations. Some texts cannot be dual-rendered due to technical limitations, including UI wrappers, spacing/overflow issues, untranslated official text, or untested files.
 
 - **Language Support**
   Dual language can be applied to **any language paired with English**, with configurable order (e.g., _English–Spanish_ or _Spanish–English_). After building the mod, Scriptorium will indicate which in-game language to select.
 
-- **## Tested Languages and Known Issues**
+- **Tested Languages and Known Issues**
   The mod has been **moderately tested** for **English ↔ Spanish**. Other Latin-based languages should work similarly, but Asian languages (Japanese, Chinese, Korean, etc.) have not been tested.
 
   Note that when using dual language, some texts may appear overlapped or misaligned. Please report any issues so they can be addressed where possible.
