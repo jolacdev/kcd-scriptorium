@@ -66,9 +66,8 @@ const transformLocalizationXmlContent = ({
   hasDualLanguage,
   isDebugMode,
 }: TransformLocalizationXmlContentOptions) => {
-  const debugPrefix = isDebugMode
-    ? `${localizationFilesMap[file].prefix}: `
-    : '';
+  const filePrefix = localizationFilesMap[file].prefix;
+  const debugPrefix = isDebugMode && filePrefix ? `${filePrefix}: ` : '';
 
   return content.replace(
     XML_ROW_CELL_GLOBAL_REGEX,
