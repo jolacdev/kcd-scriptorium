@@ -6,9 +6,9 @@ import {
   GameSupportedLanguage,
   LocalizationFile,
   localizationFilesMap,
+  localizationPakMap,
   ModFolder,
 } from '../constants/constants.ts';
-import { getCorrespondingLocalizationPakPath } from './getCorrespondingLocalizationPakPath.ts';
 import { readXmlFromPak, writePak } from './pakUtils.ts';
 import { writeXml } from './xml/fileUtils.ts';
 import { transformDialogTranslation } from './xml/localization/transformDialogTranslation.ts';
@@ -104,8 +104,8 @@ const transformLocalizationXmlContent = ({
 type GenerateLocalizationFilesOptions = {
   localizationFiles: LocalizationFile[];
   mainLanguage: GameSupportedLanguage;
+  pakLanguage: GameSupportedLanguage;
   dialogColor?: string;
-  secondaryLanguage?: GameSupportedLanguage;
   hasCategories: boolean;
   hasDualLanguage: boolean;
 };
@@ -114,7 +114,7 @@ export const generateLocalizationFiles = async ({
   dialogColor,
   localizationFiles,
   mainLanguage: language,
-  secondaryLanguage,
+  pakLanguage,
   hasCategories,
   hasDualLanguage,
 }: GenerateLocalizationFilesOptions) => {
@@ -126,13 +126,13 @@ export const generateLocalizationFiles = async ({
     ModFolder.Localization,
   );
 
-  const inputPak = getCorrespondingLocalizationPakPath(
+  const inputPakFilePath = path.join(
     appState.gamePath!,
-    language,
-    secondaryLanguage,
+    ModFolder.Localization,
+    localizationPakMap[pakLanguage],
   );
 
-  if (!inputPak) {
+  if (!inputPakFilePath || !fs.existsSync(inputPakFilePath)) {
     throw new Error('No localization input PAK file found.');
   }
 
@@ -146,7 +146,7 @@ export const generateLocalizationFiles = async ({
 
     let xml;
     try {
-      xml = await readXmlFromPak(inputPak, file);
+      xml = await readXmlFromPak(inputPakFilePath, file);
       if (!xml) {
         continue;
       }
@@ -171,7 +171,7 @@ export const generateLocalizationFiles = async ({
     temporaryXmlFilePaths.push(outputXml);
   }
 
-  const outputPakName = path.basename(inputPak);
+  const outputPakName = path.basename(inputPakFilePath);
   const outputPak = path.join(localizationDirPath, outputPakName);
 
   const xmlInputFiles = temporaryXmlFilePaths.map((xmlFile) => ({

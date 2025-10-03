@@ -1,12 +1,17 @@
+import { t } from 'i18next';
 import { AppState } from '../AppState.ts';
 import {
   GameSupportedLanguage,
+  KCD_MODS_FOLDER,
   LocalizationFile,
   localizationFilesMap,
+  ModFolder,
 } from '../constants/constants.ts';
 import { generateLocalizationFiles } from './generateLocalizationFiles.ts';
 import { generateTimersFile } from './generateTimersFile.ts';
+import { resolveEffectiveLocalizationLanguage } from './resolveLocalizationLanguage.ts';
 import { removeModFolder } from './xml/fileUtils.ts';
+import path from 'path';
 
 type UserOptions = {
   localization: {
@@ -31,10 +36,16 @@ export const processUserOptions = async ({
   try {
     if (hasRemoveTimers) {
       await generateTimersFile();
+
+      console.log(t('feedback.fileProcessing.removeTimers'));
     }
 
     const hasDualLanguage = Boolean(mainLanguage && secondaryLanguage);
     if (mainLanguage && (hasDualLanguage || hasCategories)) {
+      const effectiveInGameLanguage = resolveEffectiveLocalizationLanguage(
+        mainLanguage,
+        secondaryLanguage,
+      );
       let localizationFiles: LocalizationFile[];
 
       // NOTE: Rules to determine which localization files to generate.
@@ -55,17 +66,31 @@ export const processUserOptions = async ({
         dialogColor,
         localizationFiles,
         mainLanguage,
-        secondaryLanguage,
+        pakLanguage: effectiveInGameLanguage,
         hasCategories,
         hasDualLanguage,
       });
+
+      console.log(
+        t('feedback.fileProcessing.localization', {
+          language: t(
+            `common.gameSupportedLanguages.${effectiveInGameLanguage}`,
+          ),
+        }),
+      );
     }
+
+    console.log(
+      t('feedback.modReady', {
+        modFolderName: ModFolder.Root,
+        modsFullPath: path.join(appState.gamePath!, KCD_MODS_FOLDER),
+      }),
+    );
   } catch (error) {
     removeModFolder();
     console.error(error);
     process.exit(1);
   }
 
-  // TODO: Inform user that the mod is ready and tell them which in-game language to select for it to work.
   appState.requestExit();
 };

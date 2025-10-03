@@ -4,6 +4,8 @@ export enum ModFolder {
   Root = 'Scriptorium',
 }
 
+export const KCD_MODS_FOLDER = 'Mods';
+
 export enum GameSupportedLanguage {
   CHINESE = 'zh',
   CZECH = 'cs',

@@ -3,7 +3,7 @@ import path from 'path';
 import yauzl, { Entry } from 'yauzl';
 import yazl from 'yazl';
 
-export type PakFile = `${string}.pak`;
+type PakFile = `${string}.pak`;
 
 /**
  * Checks if the given file path ends with `.pak`.

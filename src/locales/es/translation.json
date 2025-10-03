@@ -69,5 +69,12 @@
       "yes": "Sí, salir",
       "no": "No, volver"
     }
+  },
+  "feedback": {
+    "fileProcessing": {
+      "removeTimers": "Los temporizadores de respuesta se han eliminado correctamente.",
+      "localization": "Los archivos de idioma se han actualizado correctamente. Recuerda seleccionar el {{language}} como idioma dentro del juego para activar sus funcionalidades."
+    },
+    "modReady": "✅ ¡El mod Scriptorium está listo! Mueve la carpeta generada '{{modFolderName}}' a '{{modsFullPath}}' (crea la carpeta 'Mods' si no existe)."
   }
 }
