@@ -25,6 +25,7 @@ export const transformIngameTranslation = ({
 
   // NOTE: Items with inconsistent namings that should be included.
   const whiteList = [
+    'ui_cook_item',
     'ui_door_close',
     'ui_door_open',
     'ui_eat_kettle',
