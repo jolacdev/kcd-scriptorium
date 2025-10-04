@@ -74,10 +74,10 @@ export const processUserOptions = async ({
     }
 
     console.log(
-      t('feedback.modReady', {
+      `\n${t('feedback.modReady', {
         modFolderName: ModFolder.Root,
         modsFullPath: path.join(appState.gamePath!, KCD_MODS_FOLDER),
-      }),
+      })}`,
     );
   } catch (error) {
     removeModFolder();
