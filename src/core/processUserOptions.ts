@@ -5,7 +5,6 @@ import {
   GameSupportedLanguage,
   KCD_MODS_FOLDER,
   LocalizationFile,
-  localizationFilesMap,
   ModFolder,
 } from '../constants/constants.ts';
 import { removeModFolder } from '../utils/fileUtils.ts';
@@ -47,21 +46,14 @@ export const processUserOptions = async ({
         mainLanguage,
         secondaryLanguage,
       );
-      let localizationFiles: LocalizationFile[];
 
       // NOTE: Rules to determine which localization files to generate.
-      // - If isDebugMode, generate all files.
-      // - If hasDualLanguage, generate only the dual-language supported files.
+      // - If isDebugMode or hasDualLanguage, generate all files.
       // - Otherwise, means only hasCategories is true, generate only Items file.
-      if (appState.isDebugMode) {
-        localizationFiles = Object.values(LocalizationFile);
-      } else if (hasDualLanguage) {
-        localizationFiles = (
-          Object.keys(localizationFilesMap) as LocalizationFile[]
-        ).filter((key) => localizationFilesMap[key].supported);
-      } else {
-        localizationFiles = [LocalizationFile.Items];
-      }
+      const localizationFiles: LocalizationFile[] =
+        appState.isDebugMode || hasDualLanguage
+          ? Object.values(LocalizationFile)
+          : [LocalizationFile.Items];
 
       await generateLocalizationFiles({
         dialogColor,

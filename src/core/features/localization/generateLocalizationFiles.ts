@@ -72,18 +72,18 @@ const transformLocalizationXmlContent = ({
   return content.replace(
     XML_ROW_CELL_GLOBAL_REGEX,
     (_, id, english, translation) => {
-      // NOTE: In debug mode, file prefixes are added to the texts so players can identify the source file.
-      if (!transformerFn) {
-        return `<Row><Cell>${id}</Cell><Cell>${english}</Cell><Cell>${debugPrefix}${translation}</Cell></Row>`;
-      }
-
-      const isTranslated = english !== translation;
-
       const isFirstTranslationEnglish =
         language === GameSupportedLanguage.ENGLISH;
       const [firstTranslation, lastTranslation] = isFirstTranslationEnglish
         ? [english, translation]
         : [translation, english];
+
+      // NOTE: In debug mode, file prefixes are added to the texts so players can identify the source file.
+      if (!transformerFn) {
+        return `<Row><Cell>${id}</Cell><Cell>${english}</Cell><Cell>${debugPrefix}${firstTranslation}</Cell></Row>`;
+      }
+
+      const isTranslated = english !== translation;
 
       const transformedTranslation = transformerFn({
         id,
@@ -138,11 +138,6 @@ export const generateLocalizationFiles = async ({
 
   for (const file of localizationFiles) {
     const transformerFn = fileTransformers[file];
-
-    // NOTE: Skip processing this file if it has no transformer, unless in-game debug mode is enabled.
-    if (!transformerFn && !appState.isDebugMode) {
-      continue;
-    }
 
     let xml;
     try {
