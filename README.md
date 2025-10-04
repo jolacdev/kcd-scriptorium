@@ -1,4 +1,5 @@
 <div align="center">
+  <img alt="Scriptorium logo" src="docs/images/Scriptorium.png">
   <h1>Scriptorium</h1>
 </div>
 
@@ -23,24 +24,6 @@ It provides a set of customizable utilities to improve the game’s **text**, **
 
 - **Remove Dialog Timers**
   Disable time-sensitive dialog options, giving you as much time as you need to make your choice.
-
----
-
-## 🖼️ Examples
-
-Here are some sample screenshots showing Scriptorium in action:
-
-- **Dual language**
-  // TODO: Add image
-
-- **Dialog color highlight**
-  // TODO: Add image
-
-- **Categorized items**
-  // TODO: Add image
-
-- **Dialog timers removed**
-  // TODO: Add image
 
 ---
 
