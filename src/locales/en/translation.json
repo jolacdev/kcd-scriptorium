@@ -75,6 +75,7 @@
       "removeTimers": "Dialog timers have been successfully removed.",
       "localization": "Language files have been successfully updated. Remember to select {{language}} language in-game to activate its features."
     },
-    "modReady": "✅ Scriptorium mod is ready! Move the generated '{{modFolderName}}' folder into '{{modsFullPath}}' (create a 'Mods' folder if it doesn't exist)."
+    "modReady": "Scriptorium mod is ready! Move the generated '{{modFolderName}}' folder into '{{modsFullPath}}' (create a 'Mods' folder if it doesn't exist).",
+    "pressAnyKeyToExit": "Press any key to exit..."
   }
 }
