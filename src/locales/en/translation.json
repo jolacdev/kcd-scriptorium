@@ -73,9 +73,13 @@
   "feedback": {
     "fileProcessing": {
       "removeTimers": "Dialog timers have been successfully removed.",
-      "localization": "Language files have been successfully updated. Remember to select {{language}} language in-game to activate its features."
+      "localization": "Language files have been successfully updated."
     },
-    "modReady": "Scriptorium mod is ready! Move the generated '{{modFolderName}}' folder into '{{modsFullPath}}' (create a 'Mods' folder if it doesn't exist).",
+    "modReady": {
+      "base": "Scriptorium mod is ready!",
+      "instructions": "Move the generated '{{modFolderName}}' folder into '{{modsFullPath}}' (create the 'Mods' folder if it doesn't exist).",
+      "localizationReminder": "Remember to select {{language}} language in-game to activate its features."
+    },
     "pressAnyKeyToExit": "Press any key to exit..."
   }
 }

@@ -40,13 +40,14 @@ export const processUserOptions = async ({
       console.log(t('feedback.fileProcessing.removeTimers'));
     }
 
-    const hasDualLanguage = Boolean(mainLanguage && secondaryLanguage);
-    if (mainLanguage && (hasDualLanguage || hasCategories)) {
-      const effectiveInGameLanguage = resolveEffectiveLocalizationLanguage(
-        mainLanguage,
-        secondaryLanguage,
-      );
+    const hasDualLanguage = !!mainLanguage && !!secondaryLanguage;
+    const hasSelectedAnyLocalizationOption =
+      mainLanguage && (hasDualLanguage || hasCategories);
+    const effectiveInGameLanguage = mainLanguage
+      ? resolveEffectiveLocalizationLanguage(mainLanguage, secondaryLanguage)
+      : undefined;
 
+    if (hasSelectedAnyLocalizationOption && effectiveInGameLanguage) {
       // NOTE: Rules to determine which localization files to generate.
       // - If isDebugMode or hasDualLanguage, generate all files.
       // - Otherwise, means only hasCategories is true, generate only Items file.
@@ -64,21 +65,26 @@ export const processUserOptions = async ({
         hasDualLanguage,
       });
 
+      console.log(t('feedback.fileProcessing.localization'));
+    }
+
+    console.log(`\n${t('feedback.modReady.base')}`);
+    console.log(
+      `${t('feedback.modReady.instructions', {
+        modFolderName: ModFolder.Root,
+        modsFullPath: path.join(state.gamePath!, KCD_MODS_FOLDER),
+      })}`,
+    );
+
+    if (effectiveInGameLanguage) {
       console.log(
-        t('feedback.fileProcessing.localization', {
+        t('feedback.modReady.localizationReminder', {
           language: t(
             `common.gameSupportedLanguages.${effectiveInGameLanguage}`,
           ),
         }),
       );
     }
-
-    console.log(
-      `\n${t('feedback.modReady', {
-        modFolderName: ModFolder.Root,
-        modsFullPath: path.join(appState.gamePath!, KCD_MODS_FOLDER),
-      })}`,
-    );
   } catch (error) {
     removeModFolder();
     console.error(error);

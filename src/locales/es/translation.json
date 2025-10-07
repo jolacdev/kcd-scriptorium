@@ -73,9 +73,13 @@
   "feedback": {
     "fileProcessing": {
       "removeTimers": "Los temporizadores de respuesta se han eliminado correctamente.",
-      "localization": "Los archivos de idioma se han actualizado correctamente. Recuerda seleccionar el {{language}} como idioma dentro del juego para activar sus funcionalidades."
+      "localization": "Los archivos de idioma se han actualizado correctamente."
     },
-    "modReady": "¡El mod Scriptorium está listo! Mueve la carpeta generada '{{modFolderName}}' a '{{modsFullPath}}' (crea la carpeta 'Mods' si no existe).",
+    "modReady": {
+      "base": "¡El mod Scriptorium está listo!",
+      "instructions": "Mueve la carpeta generada '{{modFolderName}}' a '{{modsFullPath}}' (crea la carpeta 'Mods' si no existe).",
+      "localizationReminder": "Recuerda seleccionar el {{language}} como idioma dentro del juego para activar sus funcionalidades."
+    },
     "pressAnyKeyToExit": "Presiona cualquier tecla para salir..."
   }
 }
