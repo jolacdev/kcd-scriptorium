@@ -17,17 +17,21 @@ export const transformQuestTranslation = ({
   hasDualLanguage,
   isTranslated,
 }: QuestTransformerOptions): string => {
-  if (!hasDualLanguage || !isTranslated) {
+  const isSavename = id.includes('_Savename');
+  const isSubchapterName = /^subchapter_.+?_name$/.test(id); // Quest titles
+
+  if (!hasDualLanguage || !isTranslated || isSavename || isSubchapterName) {
     return firstTranslation;
   }
 
   const isObjective = id.startsWith('objective_'); // Quest context.
+  const isQuestLogObjective = isObjective && id.endsWith('_LogStarted'); // TODO: Check if *_LogCompleted entries are log objectives as well.
   const isChapter = id.startsWith('chap'); // Quest core objectives.
-  const subchapterRegex = /^subchapter_(.+?)_(name|description)$/; // Quest titles and descriptions.
+  const isSubchapterDescription = /^subchapter_.+?_description$/.test(id); // Quest descriptions
 
-  if (isObjective || isChapter || subchapterRegex.test(id)) {
-    const separator = isChapter ? `${INLINE_SEPARATOR}` : `${BR}${BR}`;
-
+  if (isObjective || isChapter || isSubchapterDescription) {
+    const separator =
+      isChapter || isQuestLogObjective ? `${INLINE_SEPARATOR}` : `${BR}${BR}`;
     return `${firstTranslation}${separator}${lastTranslation}`;
   }
 
