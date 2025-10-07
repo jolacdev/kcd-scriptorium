@@ -29,7 +29,7 @@ export const processUserOptions = async ({
   localization: { dialogColor, mainLanguage, secondaryLanguage, hasCategories },
   timers: { hasRemoveTimers },
 }: UserOptions) => {
-  const appState = AppState.getInstance();
+  const state = AppState.getInstance();
 
   removeModFolder();
 
@@ -51,7 +51,7 @@ export const processUserOptions = async ({
       // - If isDebugMode or hasDualLanguage, generate all files.
       // - Otherwise, means only hasCategories is true, generate only Items file.
       const localizationFiles: LocalizationFile[] =
-        appState.isDebugMode || hasDualLanguage
+        state.isDebugMode || hasDualLanguage
           ? Object.values(LocalizationFile)
           : [LocalizationFile.Items];
 
@@ -85,5 +85,5 @@ export const processUserOptions = async ({
     process.exit(1);
   }
 
-  appState.requestExit();
+  state.requestExit();
 };

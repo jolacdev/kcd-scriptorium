@@ -118,7 +118,7 @@ export const generateLocalizationFiles = async ({
   hasCategories,
   hasDualLanguage,
 }: GenerateLocalizationFilesOptions) => {
-  const appState = AppState.getInstance();
+  const state = AppState.getInstance();
   const temporaryXmlFilePaths = [];
   const localizationDirPath = path.join(
     process.cwd(),
@@ -127,7 +127,7 @@ export const generateLocalizationFiles = async ({
   );
 
   const inputPakFilePath = path.join(
-    appState.gamePath!,
+    state.gamePath!,
     ModFolder.Localization,
     localizationPakMap[pakLanguage],
   );
@@ -159,7 +159,7 @@ export const generateLocalizationFiles = async ({
       transformerFn,
       hasCategories,
       hasDualLanguage,
-      isDebugMode: appState.isDebugMode,
+      isDebugMode: state.isDebugMode,
     });
 
     writeXml(outputXml, transformedXml);
