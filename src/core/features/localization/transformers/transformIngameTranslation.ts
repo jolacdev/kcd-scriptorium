@@ -19,7 +19,14 @@ export const transformIngameTranslation = ({
   hasDualLanguage,
   isTranslated,
 }: IngameTransformerOptions): string => {
-  if (!hasDualLanguage || !isTranslated) {
+  const blackList = [
+    'ui_hud_you_discovered',
+    'ui_hud_you_discovered_female',
+    'ui_hud_you_learned',
+    'ui_hud_you_learned_female',
+  ];
+
+  if (!hasDualLanguage || !isTranslated || blackList.includes(id)) {
     return firstTranslation;
   }
 
