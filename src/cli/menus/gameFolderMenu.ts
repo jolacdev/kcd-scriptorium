@@ -5,10 +5,20 @@ import { AppState } from '../../core/AppState.ts';
 import { isValidGamePath } from '../../utils/validators/isValidGamePath.ts';
 import { prompt } from '../prompt.ts';
 
+const DEFAULT_INSTALL_PATH =
+  'C:\\Program Files (x86)\\Steam\\steamapps\\common\\KingdomComeDeliverance';
+
 export const gameFolderMenu = async () => {
+  const state = AppState.getInstance();
   const t = i18next.getFixedT(null, null, 'gameFolderMenu');
 
+  const defaultInstallPath = fs.existsSync(DEFAULT_INSTALL_PATH)
+    ? DEFAULT_INSTALL_PATH
+    : undefined;
+  const initial = state.gamePath ?? defaultInstallPath;
+
   const { value } = await prompt({
+    initial,
     message: t('title'),
     name: 'value',
     type: 'text',
@@ -30,6 +40,6 @@ export const gameFolderMenu = async () => {
   });
 
   if (value) {
-    AppState.getInstance().setGamePath(value);
+    state.setGamePath(value);
   }
 };
