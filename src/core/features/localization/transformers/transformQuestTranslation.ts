@@ -25,13 +25,14 @@ export const transformQuestTranslation = ({
   }
 
   const isObjective = id.startsWith('objective_'); // Quest context.
-  const isQuestLogObjective = isObjective && id.endsWith('_LogStarted'); // TODO: Check if *_LogCompleted entries are log objectives as well.
   const isChapter = id.startsWith('chap'); // Quest core objectives.
   const isSubchapterDescription = /^subchapter_.+?_description$/.test(id); // Quest descriptions
 
   if (isObjective || isChapter || isSubchapterDescription) {
+    const isQuestLogObjective = isObjective && id.endsWith('_LogStarted'); // TODO: Check if *_LogCompleted entries are log objectives as well.
     const separator =
       isChapter || isQuestLogObjective ? `${INLINE_SEPARATOR}` : `${BR}${BR}`;
+
     return `${firstTranslation}${separator}${lastTranslation}`;
   }
 
