@@ -1,6 +1,6 @@
 {
   "name": "@jolacdev/kcd-scriptorium",
-  "version": "1.0.0-rc.2",
+  "version": "1.0.0-rc.3",
   "description": "Kingdom Come: Deliverance - Localization Toolkit (CLI)",
   "type": "module",
   "main": "dist/index.js",
