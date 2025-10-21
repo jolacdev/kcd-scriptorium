@@ -1,3 +1,4 @@
+import { isIdBlacklisted, TRANSFORMER_BLACKLISTS } from '../blacklist.ts';
 import { BR, INLINE_SEPARATOR } from '../constants.ts';
 import { applyFontColor } from '../helpers/applyFontColor.ts';
 import type { IngameTransformerOptions } from '../types.ts';
@@ -19,14 +20,11 @@ export const transformIngameTranslation = ({
   hasDualLanguage,
   isTranslated,
 }: IngameTransformerOptions): string => {
-  const blackList = [
-    'ui_hud_you_discovered',
-    'ui_hud_you_discovered_female',
-    'ui_hud_you_learned',
-    'ui_hud_you_learned_female',
-  ];
-
-  if (!hasDualLanguage || !isTranslated || blackList.includes(id)) {
+  if (
+    !hasDualLanguage ||
+    !isTranslated ||
+    isIdBlacklisted(id, TRANSFORMER_BLACKLISTS.ingame)
+  ) {
     return firstTranslation;
   }
 
@@ -56,11 +54,6 @@ export const transformIngameTranslation = ({
   if (isEndDialogOption) {
     // NOTE:  ui_end_topic is used as dialog option with NPCs to end the conversation.
     return `${firstTranslation}${BR}${applyFontColor(lastTranslation, color)}`;
-  }
-
-  const isObjectiveMessage = id.startsWith('ui_objective');
-  if (isObjectiveMessage) {
-    return firstTranslation;
   }
 
   return firstTranslation;

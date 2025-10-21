@@ -1,3 +1,4 @@
+import { isIdBlacklisted, TRANSFORMER_BLACKLISTS } from '../blacklist.ts';
 import { BR, INLINE_SEPARATOR } from '../constants.ts';
 import type { QuestTransformerOptions } from '../types.ts';
 
@@ -17,10 +18,11 @@ export const transformQuestTranslation = ({
   hasDualLanguage,
   isTranslated,
 }: QuestTransformerOptions): string => {
-  const isSavename = id.includes('_Savename');
-  const isSubchapterName = /^subchapter_.+?_name$/.test(id); // Quest titles
-
-  if (!hasDualLanguage || !isTranslated || isSavename || isSubchapterName) {
+  if (
+    !hasDualLanguage ||
+    !isTranslated ||
+    isIdBlacklisted(id, TRANSFORMER_BLACKLISTS.quest)
+  ) {
     return firstTranslation;
   }
 

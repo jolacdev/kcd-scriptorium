@@ -17,14 +17,15 @@ export const transformMenuTranslation = ({
   hasDualLanguage,
   isTranslated,
 }: MenuTransformerOptions): string => {
+  if (!hasDualLanguage || !isTranslated) {
+    return firstTranslation;
+  }
+
   const isDescription = id.includes('_desc');
   const isCodexContent = id.startsWith('ui_codex_cont_');
   const isCodexTutorialContent = id.startsWith('ui_tutorial_cont_');
   const isCodexCharacter = id.startsWith('ui_codex_char_');
 
-  if (!hasDualLanguage || !isTranslated) {
-    return firstTranslation;
-  }
   const shouldAddDualLanguage =
     isDescription ||
     isCodexContent ||

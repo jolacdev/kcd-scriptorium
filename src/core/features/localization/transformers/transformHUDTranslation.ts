@@ -16,9 +16,9 @@ export const transformHUDTranslation = ({
   hasDualLanguage,
   isTranslated,
 }: HUDTransformerOptions): string => {
-  const shouldAddDualLanguage = hasDualLanguage && isTranslated;
+  if (!hasDualLanguage || !isTranslated) {
+    return firstTranslation;
+  }
 
-  return shouldAddDualLanguage
-    ? `${firstTranslation}${INLINE_SEPARATOR}${lastTranslation}`
-    : firstTranslation;
+  return `${firstTranslation}${INLINE_SEPARATOR}${lastTranslation}`;
 };
